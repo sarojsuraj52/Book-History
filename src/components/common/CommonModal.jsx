@@ -39,7 +39,7 @@ export default function CommonModal({ onClose, open, children }) {
           style={{ width: "100%" }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          exit={{ scale: 0, transition: { duration: 0.3} }}
+          exit={{ scale: 0, transition: { duration: 0.2} }}
           transition={{
             type: "spring",
             stiffness: 260,

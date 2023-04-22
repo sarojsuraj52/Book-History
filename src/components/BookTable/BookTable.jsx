@@ -16,7 +16,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMediaQuery } from "@mui/material";
-
+import SnackBar from "../SnackBar";
+import { useSelector, useDispatch } from "react-redux";
 import ViewBook from "../ViewBook";
 import EditBook from "./EditBook";
 import DeleteBook from "./DeleteBook";
@@ -35,9 +36,18 @@ export default function BookTable({ bookData }) {
   const isMobile = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
   const [page, setPage] = useState(1);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const booksPerPage = 5;
   const numPages = Math.ceil(bookData.length / booksPerPage);
+  const errorDELETE = useSelector((state) => state.delete.error);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
 
   const handleShowDetails = (book) => {
     setSelectedBook(book);
@@ -87,82 +97,92 @@ export default function BookTable({ bookData }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.map((book, index) => (
-              <TableRow
-                key={book.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {" "}
-                  {index + 1}{" "}
-                </TableCell>
-                <TableCell
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {" "}
-                  {book.title}{" "}
-                </TableCell>
-                <TableCell
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {book.author}
-                </TableCell>
-                <TableCell
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {book.pages}
-                </TableCell>
-                <TableCell
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {book.genre}
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Button
-                    component={motion.div}
-                    whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
-                    whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                    onClick={() => handleShowDetails(book)}
+            {books.map((book, index) => {
+              return (
+                book && (
+                  <TableRow
+                    key={book.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <InfoIcon style={{ fontSize: "1.35rem" }} />
-                    &nbsp; Show details
-                  </Button>
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component={motion.td}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <EditBook bookData={book} />
-                  <DeleteBook id={book.id} />
-                </TableCell>
-              </TableRow>
-            ))}
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {" "}
+                      {page > 0 ? (page - 1) * booksPerPage + index + 1 : index + 1}
+                    </TableCell>
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {" "}
+                      {book.title}{" "}
+                    </TableCell>
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {book.author}
+                    </TableCell>
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {book.pages}
+                    </TableCell>
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {book.genre}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Button
+                        component={motion.div}
+                        whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
+                        whileHover={{
+                          scale: 1.1,
+                          transition: { duration: 0.2 },
+                        }}
+                        onClick={() => handleShowDetails(book)}
+                      >
+                        <InfoIcon style={{ fontSize: "1.35rem" }} />
+                        &nbsp; Show details
+                      </Button>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      component={motion.td}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <EditBook bookData={book} />
+                      <DeleteBook
+                        id={book.id}
+                        openSnackbar={() => setSnackbarOpen(true)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                )
+              );
+            })}
           </TableBody>
         </Table>
         <AnimatePresence>
@@ -189,6 +209,12 @@ export default function BookTable({ bookData }) {
           size="large"
         />
       </Box>
+      <SnackBar
+        open={snackbarOpen}
+        handleClose={handleSnackbarClose}
+        message={errorDELETE ? errorDELETE : "Book deleted successfully"}
+        severity={errorDELETE ? "warning" : "success"}
+      />
     </>
   );
 }

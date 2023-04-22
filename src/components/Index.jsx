@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../store/bookSlice";
 import Footer from "./Footer";
 import { AnimatePresence, motion } from "framer-motion";
+import SnackBar from "./SnackBar";
 
 const Index = () => {
   const [openCommonModal, setCommonModal] = React.useState(false);
@@ -15,12 +16,22 @@ const Index = () => {
   const deletedBookId = useSelector((state) => state.delete.data);
   const addedBookId = useSelector((state) => state.post.data);
   const editBookId = useSelector((state) => state.put.data);
+  const errorPOST = useSelector((state) => state.post.error);
 
   const dispatch = useDispatch();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
   useEffect(() => {
     dispatch(fetchBooks());
   }, [deletedBookId, addedBookId, editBookId]);
-  const [toggle,setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
 
   return (
     <>
@@ -40,8 +51,8 @@ const Index = () => {
         <BookTable bookData={booksArray} />
         <Button
           component={motion.div}
-          whileTap={{ scale: 0.7, transition: { duration: 0.2} }}
-          whileHover={{scale:1.1, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
+          whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
           size="large"
           variant="contained"
           color="success"
@@ -51,13 +62,22 @@ const Index = () => {
         </Button>
       </Box>
       <AnimatePresence mode="wait">
-        {openCommonModal && <BookForm
-          open={openCommonModal}
-          onClose={() => setCommonModal(false)}
-          method="POST"
-          />}
-          </AnimatePresence>
+        {openCommonModal && (
+          <BookForm
+            open={openCommonModal}
+            onClose={() => setCommonModal(false)}
+            method="POST"
+            openSnackbar={() => setSnackbarOpen(true)}
+          />
+        )}
+      </AnimatePresence>
       <Footer />
+      <SnackBar
+        open={snackbarOpen}
+        handleClose={handleSnackbarClose}
+        message={errorPOST ? errorPOST : "Book added successfully"}
+        severity={errorPOST ? "warning" : "success"}
+      />
     </>
   );
 };

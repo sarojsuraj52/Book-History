@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { authAction } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+// import Progress from './Progress'
 
 const cred = {
   name: "suraj saroj",
@@ -47,7 +48,8 @@ const Signin = () => {
     onSubmit: (values, action) => {
       if (JSON.stringify(cred) == JSON.stringify(values)) {
         dispatch(authAction.login(values.name));
-        alert("Login Successfull");
+        // alert("Login Successfull");
+        // <Progress />
         navigate("/");
         action.resetForm();
       }
@@ -92,7 +94,7 @@ const Signin = () => {
                 ? formik.errors.name
                 : ""
             }
-            error={formik.errors.name && formik.touched.name }
+            error={formik.errors.name && formik.touched.name}
           />
 
           <TextField
@@ -130,7 +132,7 @@ const Signin = () => {
                 ? formik.errors.password
                 : ""
             }
-            error={ formik.errors.password && formik.touched.password }
+            error={formik.errors.password && formik.touched.password}
           />
 
           <Button

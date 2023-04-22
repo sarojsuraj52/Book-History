@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const deleteBook = createAsyncThunk("mySlice/DeleteBook", async (id) => {
     console.log(id)
-  const response = await fetch(`http://localhost:3000/books/${id}`, {
+  const response = await fetch(`  http://192.168.0.106:3000/books/${id}`, {
     method: "DELETE",
   });
   return await response.json();

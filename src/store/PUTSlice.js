@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const editBook = createAsyncThunk("mySlice/editBook", async (data) => {
-  const response = await fetch(`http://localhost:3000/books/${data.id}`, {
+  const response = await fetch(`  http://192.168.0.106:3000/books/${data.id}`, {
     method:'PUT',
     headers: {
       'Content-Type': 'application/json'

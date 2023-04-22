@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addBook = createAsyncThunk("mySlice/AddBook", async (data) => {
-  const response = await fetch("http://localhost:3000/books", {
+  const response = await fetch("http://192.168.0.106:3000/books", {
     method:'POST',
     headers: {
       'Content-Type': 'application/json'
