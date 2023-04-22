@@ -42,14 +42,15 @@ const Index = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          p: 5,
+          p: 1,
         }}
       >
-        <Typography sx={{ mb: 4 }} component="h1" variant="h4">
+        <Typography sx={{ mb: 4 ,mt:3}} component="h1" variant="h4">
           Book List
         </Typography>
         <BookTable bookData={booksArray} />
         <Button
+        sx={{marginY:3}}
           component={motion.div}
           whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}

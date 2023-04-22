@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ViewBook from "../ViewBook";
 import EditBook from "./EditBook";
 import DeleteBook from "./DeleteBook";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   tableCellHead: {
@@ -106,25 +107,25 @@ export default function BookTable({ bookData }) {
                   >
                     <TableCell
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {" "}
-                      {page > 0 ? (page - 1) * booksPerPage + index + 1 : index + 1}
+                      {page > 0
+                        ? (page - 1) * booksPerPage + index + 1
+                        : index + 1}
                     </TableCell>
                     <TableCell
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {" "}
-                      {book.title}{" "}
+                      {book.title}
                     </TableCell>
                     <TableCell
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
@@ -132,7 +133,7 @@ export default function BookTable({ bookData }) {
                     </TableCell>
                     <TableCell
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
@@ -140,7 +141,7 @@ export default function BookTable({ bookData }) {
                     </TableCell>
                     <TableCell
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
@@ -149,11 +150,12 @@ export default function BookTable({ bookData }) {
                     <TableCell
                       align="center"
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <Button
+                      color='info'
                         component={motion.div}
                         whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
                         whileHover={{
@@ -163,21 +165,26 @@ export default function BookTable({ bookData }) {
                         onClick={() => handleShowDetails(book)}
                       >
                         <InfoIcon style={{ fontSize: "1.35rem" }} />
-                        &nbsp; Show details
+                        &nbsp;
+                        <span style={{ whiteSpace: "nowrap" }}>
+                          Show details
+                        </span>
                       </Button>
                     </TableCell>
                     <TableCell
                       align="center"
                       component={motion.td}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <EditBook bookData={book} />
-                      <DeleteBook
-                        id={book.id}
-                        openSnackbar={() => setSnackbarOpen(true)}
-                      />
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <EditBook bookData={book} />
+                        <DeleteBook
+                          id={book.id}
+                          openSnackbar={() => setSnackbarOpen(true)}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 )
@@ -195,6 +202,19 @@ export default function BookTable({ bookData }) {
           )}
         </AnimatePresence>
       </TableContainer>
+      {bookData.length === 0 && (
+        <Typography
+          style={{
+            width: "100%",
+            height: "50px",
+            textAlign: "center",
+            margin: "70px 0",
+            fontSize: 'x-large',
+          }}
+        >
+          No Data
+        </Typography>
+      )}
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2, mt: 3 }}>
         <Pagination
           count={numPages}

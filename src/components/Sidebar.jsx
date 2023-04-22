@@ -1,4 +1,4 @@
-import  React ,{useState} from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
@@ -11,8 +11,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchBar from "./SearchBar";
-import { Accordion, AccordionSummary, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionSummary, Typography } from "@mui/material";
+import SortAccordion from "./Accordion/SortAccordion";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import FilterAccordion from "./Accordion/filterAccordion";
 
 export default function Sidebar() {
   const [state, setState] = React.useState({
@@ -39,27 +42,13 @@ export default function Sidebar() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: '100%' }}
+      sx={{ width: "100%" }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary={"okok"} />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Accordion expanded={expanded} onChange={handleExpand}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>Click to expand/collapse</Typography>
-      </AccordionSummary>
-      <div>Collapsible content goes here</div>
-    </Accordion>
+      <SortAccordion />
+      <FilterAccordion />
     </Box>
   );
 

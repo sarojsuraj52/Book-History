@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { authAction } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-// import Progress from './Progress'
+import { motion } from "framer-motion";
 
 const cred = {
   name: "suraj saroj",
@@ -48,8 +48,7 @@ const Signin = () => {
     onSubmit: (values, action) => {
       if (JSON.stringify(cred) == JSON.stringify(values)) {
         dispatch(authAction.login(values.name));
-        // alert("Login Successfull");
-        // <Progress />
+        alert("Login Successfull");
         navigate("/");
         action.resetForm();
       }
@@ -136,6 +135,9 @@ const Signin = () => {
           />
 
           <Button
+            component={motion.button}
+            whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
+            whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
             type="submit"
             fullWidth
             variant="contained"

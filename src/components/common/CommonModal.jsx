@@ -10,7 +10,7 @@ const style = {
   left: "50%",
   top: "50%",
   transform: "translate(-50%,-50%)",
-  width: "75%",
+  width: "82%",
   maxWidth: "600px",
   height: "auto",
   maxHeight: "600px",
@@ -27,6 +27,7 @@ export default function CommonModal({ onClose, open, children }) {
   return (
     <>
       <Modal
+        disableScrollLock={true}
         open={open}
         onClose={onClose}
         sx={{
@@ -39,12 +40,13 @@ export default function CommonModal({ onClose, open, children }) {
           style={{ width: "100%" }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          exit={{ scale: 0, transition: { duration: 0.2} }}
+          exit={{ scale: 0, transition: { duration: 0.28} }}
           transition={{
             type: "spring",
             stiffness: 260,
             damping: 22,
           }}
+          layout={true}
         >
           <Box sx={style}>{children}</Box>
         </motion.div>

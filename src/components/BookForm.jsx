@@ -352,6 +352,15 @@ const BookForm = ({ open, onClose, method, bookData , openSnackbar}) => {
             <Button
               variant="contained"
               size="large"
+              color="error"
+              onClick={onClose}
+              sx={{mr:2}}
+            >
+             Cancel
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
               color="primary"
               type="submit"
             >

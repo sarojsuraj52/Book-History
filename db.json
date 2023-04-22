@@ -111,7 +111,8 @@
       "endDate": "",
       "source": "Purchased",
       "id": 14
-    },{
+    },
+    {
       "title": "To Kill a Mockingbird",
       "author": "Harper Lee",
       "publisher": "J. B. Lippincott & Co.",
@@ -207,8 +208,7 @@
       "startDate": "",
       "endDate": "",
       "source": "Rented",
-      "id":21
+      "id": 21
     }
-    
   ]
 }

@@ -31,7 +31,7 @@ const EditBook = ({ bookData }) => {
         onClick={handleEdit}
         sx={{ mr: 1 }}
       >
-        <EditIcon /> &nbsp; Edit
+        <EditIcon /> &nbsp; <span>Edit</span>
       </Button>
       <AnimatePresence mode="wait" initial={false}>
         {open && (

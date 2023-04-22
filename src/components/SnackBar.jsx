@@ -10,11 +10,12 @@ function SnackBar({ open, handleClose, message, severity }) {
       autoHideDuration={4000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    >
+      >
       <MuiAlert
         elevation={6}
         variant="filled"
         severity={severity}
+        onClose={handleClose}
       >
         {message}
       </MuiAlert>

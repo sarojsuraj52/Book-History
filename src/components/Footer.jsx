@@ -1,33 +1,47 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { Link } from "@mui/material";
 
 const Footer = () => {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
+    <Box
       sx={{
-        position: "fixed",
-        bottom: 0,
-        left:0,
-        right:0,
-        width: "100%",
-        minHeight:'30px'
+        flexGrow: 1,
+        padding: 2,
+        paddingBottom: "40px",
       }}
     >
-      {"Copyright © "}
-      <Link
-        color="inherit"
-        href="https://www.zconsolutions.com/"
-        target="_blank"
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        sx={{
+          position: 'fixed',
+          bottom:0,
+          left: 0,
+          right: 0,
+          minHeight: "30px",
+          padding: "8px",
+          backgroundColor: "#f5f5f5",
+          borderRadius:3,
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center',
+        }}
       >
-        zCon Solutions
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+        	&#169;
+        <Link
+          color="primary"
+          href="https://www.zconsolutions.com/"
+          target="_blank"
+          sx={{textDecoration:'none'}}
+        >
+          &nbsp;zCon Solutions Pvt Ltd&nbsp;
+        </Link>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </Box>
   );
 };
 
