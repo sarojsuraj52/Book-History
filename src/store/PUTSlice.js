@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const editBook = createAsyncThunk("mySlice/editBook", async (data) => {
-  const response = await fetch(`  http://192.168.0.106:3000/books/${data.id}`, {
+export const editBook = createAsyncThunk("mySlice/editBook", async ({data,id}) => {
+  const response = await fetch(`https://okokok-7fa48-default-rtdb.firebaseio.com/books/${id}.json`, {
     method:'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const PUTSlice = createSlice({
       state.loading = true;
     })
     .addCase(editBook.fulfilled, (state, action) => {
-      state.data = action.payload.id;
+      state.data = action.payload;
       state.loading = false;
       state.error = null;
     })

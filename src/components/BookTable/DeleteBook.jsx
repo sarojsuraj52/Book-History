@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { deleteBook } from "../../store/DELETESlice";
+import { useDispatch, useSelector } from "react-redux";
+import { DELETEAction, deleteBook } from "../../store/DELETESlice";
 import { motion } from "framer-motion";
 
 const DeleteBook = ({ id, openSnackbar }) => {
   const dispatch = useDispatch();
+  const errorDELETE = useSelector((state) => state.delete.error);
+
   const handleDelete = () => {
     dispatch(deleteBook(id));
+    !errorDELETE && dispatch(DELETEAction.updateId(id));
     openSnackbar();
   };
   return (

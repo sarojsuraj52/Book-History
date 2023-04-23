@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { authAction } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "./layout/Footer";
 import { motion } from "framer-motion";
 
 const cred = {

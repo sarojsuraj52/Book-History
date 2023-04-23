@@ -1,8 +1,8 @@
 import React from "react";
 import CommonAccordion from "../common/CommonAccordion";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Button from '@mui/material/Button';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Button from "@mui/material/Button";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import BookIcon from "@mui/icons-material/Book";
@@ -10,7 +10,6 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
 import { useDispatch } from "react-redux";
 import { bookAction } from "../../store/bookSlice";
-
 
 const bookGenres = [
   "Fiction",
@@ -55,40 +54,56 @@ const FilterAccordion = () => {
   return (
     <CommonAccordion heading="Filter" icon={<FilterAltIcon />}>
       <Button
-      color="inherit"
+        color="inherit"
         fullWidth
-        style={{ justifyContent: "flex-start", marginBottom: "5px" }}
+        style={{
+          marginBottom: "5px",
+          textTransform: "none",
+          justifyContent: "flex-start",
+        }}
         size="large"
         onClick={handleReadFilter}
       >
-        <BookIcon /> &nbsp;READ
+        <BookIcon /> &nbsp;Read
       </Button>
       <Button
-      color="inherit"
+        color="inherit"
         fullWidth
-        style={{ justifyContent: "flex-start" }}
+        style={{
+          marginBottom: "5px",
+          textTransform: "none",
+          justifyContent: "flex-start",
+        }}
         size="large"
         onClick={handleUnReadFilter}
       >
-        <PlayLessonIcon /> &nbsp;UNREAD
+        <PlayLessonIcon /> &nbsp;Unread
       </Button>
       <Button
-      color="inherit"
+        color="inherit"
         fullWidth
-        style={{ justifyContent: "flex-start" }}
+        style={{
+          marginBottom: "5px",
+          textTransform: "none",
+          justifyContent: "flex-start",
+        }}
         size="large"
         onClick={handleReadingFilter}
       >
-        <AutoStoriesIcon /> &nbsp;READING
+        <AutoStoriesIcon /> &nbsp;Reading
       </Button>
       <Button
         color="error"
         fullWidth
-        style={{ justifyContent: "flex-start" }}
+        style={{
+          marginBottom: "5px",
+          textTransform: "none",
+          justifyContent: "flex-start",
+        }}
         size="large"
         onClick={handleClearFilter}
       >
-        <HighlightOffIcon /> &nbsp;CLEAR FILTER
+        <HighlightOffIcon /> &nbsp;Clear Filter
       </Button>
     </CommonAccordion>
   );

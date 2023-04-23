@@ -101,10 +101,10 @@ const BookForm = ({ open, onClose, method, bookData , openSnackbar}) => {
       dispatch(addBook(values));
       openSnackbar()
       // alert(errorPOST ? errorPOST : "Book Added");
-      onClose();
+      // onClose();
     }
     if (method == "PUT") {
-      dispatch(editBook(values));
+      dispatch(editBook({data: values, id: bookData[0]}));
       openSnackbar()
       onClose();
       // alert(errorPUT ? errorPUT : "Book Updated");
@@ -113,7 +113,7 @@ const BookForm = ({ open, onClose, method, bookData , openSnackbar}) => {
   
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
-      initialValues: bookData || {
+      initialValues: bookData?.[1] || {
         title: "",
         author: "",
         publisher: "",

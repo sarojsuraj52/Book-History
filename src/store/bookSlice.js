@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
-  const response = await fetch("http://192.168.0.106:3000/books");
-  const data = await response.json();
+  const response = await fetch("https://okokok-7fa48-default-rtdb.firebaseio.com/books.json");
+  let data = await response.json();
+  data = Object.entries(data)
   return data;
 });
 

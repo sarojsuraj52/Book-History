@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,29 +12,26 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import { useDispatch, useSelector } from "react-redux";
-import { authAction } from "../store/authSlice";
+import { authAction } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
+import { AnimatePresence } from "framer-motion";
+import { Button } from "@material-ui/core";
 
 // const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Logout"];
 
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [state, setState] = useState({
+    openSidebar: false,
+  });
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userName = useSelector((state) => state.auth.userName);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -46,12 +43,28 @@ function Navbar() {
     navigate("/auth");
   };
 
+  const showDrawer = (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ openSidebar: true });
+  };
+
   return (
     <AppBar position="static">
       {/* <Container > */}
       <Toolbar
         disableGutters
-        sx={{ display: "flex", justifyContent: "space-between", pr:{xs:2,md:3,lg:4} }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          pr: { xs: 2, md: 3, lg: 4 },
+        }}
       >
         <Box
           sx={{
@@ -60,7 +73,14 @@ function Navbar() {
             alignItems: "center",
           }}
         >
-          <Sidebar />
+          <Button onClick={() => setState({ openSidebar: true })}>
+            <MenuIcon style={{ color: "white" }} />
+          </Button>
+          <Sidebar
+            open={state.openSidebar}
+            onOpen={showDrawer}
+            onClose={() => setState({ openSidebar: false })}
+          />
           <TableChartIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -123,7 +143,7 @@ function Navbar() {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px" }}
+            sx={{ mt: "45px", width: "100%" }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{

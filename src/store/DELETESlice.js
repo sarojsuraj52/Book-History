@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const deleteBook = createAsyncThunk("mySlice/DeleteBook", async (id) => {
-    console.log(id)
-  const response = await fetch(`  http://192.168.0.106:3000/books/${id}`, {
-    method: "DELETE",
-  });
-  return await response.json();
+  const response = await fetch(
+    `https://okokok-7fa48-default-rtdb.firebaseio.com/books/${id}.json`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  const data = await response.json();
+  return data;
 });
 
 const DELETESlice = createSlice({
@@ -15,7 +19,11 @@ const DELETESlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    updateId(state, action) {
+      state.data = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(deleteBook.pending, (state) => {
@@ -33,4 +41,5 @@ const DELETESlice = createSlice({
   },
 });
 
+export const DELETEAction = DELETESlice.actions
 export default DELETESlice.reducer;

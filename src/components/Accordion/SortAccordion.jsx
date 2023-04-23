@@ -36,7 +36,7 @@ const SortAccordion = () => {
       >
         <SortByAlphaIcon /> &nbsp;
         <span>
-          TITLE {`(${isTitleAscending ?'isDescending': "isAscending" })`}
+          Title {`(${isTitleAscending ?'isDescending': "isAscending" })`}
         </span>
       </Button>
       <Button

@@ -44,7 +44,7 @@ export default function CommonModal({ onClose, open, children }) {
           transition={{
             type: "spring",
             stiffness: 260,
-            damping: 22,
+            damping: 23,
           }}
           layout={true}
         >

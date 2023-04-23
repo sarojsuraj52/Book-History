@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
 import { Box, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import BookForm from "./BookForm";
 import BookTable from "./BookTable/BookTable";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../store/bookSlice";
-import Footer from "./Footer";
 import { AnimatePresence, motion } from "framer-motion";
 import SnackBar from "./SnackBar";
 
@@ -17,21 +17,20 @@ const Index = () => {
   const addedBookId = useSelector((state) => state.post.data);
   const editBookId = useSelector((state) => state.put.data);
   const errorPOST = useSelector((state) => state.post.error);
-
+  
   const dispatch = useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
   };
-
+  
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [deletedBookId, addedBookId, editBookId]);
-  const [toggle, setToggle] = useState(false);
+  }, [addedBookId, editBookId,deletedBookId]);
 
   return (
     <>
@@ -45,12 +44,12 @@ const Index = () => {
           p: 1,
         }}
       >
-        <Typography sx={{ mb: 4 ,mt:3}} component="h1" variant="h4">
+        <Typography sx={{ mb: 4, mt: 3 }} component="h1" variant="h4">
           Book List
         </Typography>
         <BookTable bookData={booksArray} />
         <Button
-        sx={{marginY:3}}
+          sx={{ marginY: 3 }}
           component={motion.div}
           whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}

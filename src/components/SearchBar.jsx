@@ -34,19 +34,19 @@ const SearchBar = () => {
     }
   };
 
-  const clearFilter = ()=>{
+  const clearFilter = () => {
     dispatch(bookAction.clearFilter());
-  }
+  };
   const handleClearFilter = () => {
     dispatch(bookAction.clearFilter());
-    setSearch('')
+    setSearch("");
   };
 
   React.useEffect(() => {
     if (searchText.length === 0) {
-      clearFilter()
+      clearFilter();
     } else {
-      clearFilter()
+      clearFilter();
       handleSubmit();
     }
   }, [searchText]);

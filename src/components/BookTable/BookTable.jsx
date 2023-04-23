@@ -18,7 +18,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMediaQuery } from "@mui/material";
 import SnackBar from "../SnackBar";
 import { useSelector, useDispatch } from "react-redux";
-import ViewBook from "../ViewBook";
+import ViewBook from "./ViewBook";
 import EditBook from "./EditBook";
 import DeleteBook from "./DeleteBook";
 import { Typography } from "@material-ui/core";
@@ -63,7 +63,7 @@ export default function BookTable({ bookData }) {
   };
 
   const startIndex = (page - 1) * booksPerPage;
-  const books = bookData.slice(startIndex, startIndex + booksPerPage);
+  const books = bookData?.slice(startIndex, startIndex + booksPerPage);
 
   return (
     <>
@@ -102,13 +102,14 @@ export default function BookTable({ bookData }) {
               return (
                 book && (
                   <TableRow
-                    key={book.id}
+                    key={book[0]}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       {page > 0
@@ -119,43 +120,48 @@ export default function BookTable({ bookData }) {
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {book.title}
+                      {book[1].title}
                     </TableCell>
                     <TableCell
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {book.author}
+                      {book[1].author}
                     </TableCell>
                     <TableCell
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {book.pages}
+                      {book[1].pages}
                     </TableCell>
                     <TableCell
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {book.genre}
+                      {book[1].genre}
                     </TableCell>
                     <TableCell
                       align="center"
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <Button
-                      color='info'
+                        color="info"
                         component={motion.div}
                         whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
                         whileHover={{
@@ -176,12 +182,13 @@ export default function BookTable({ bookData }) {
                       component={motion.td}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <div style={{ display: "flex", flexDirection: "row" }}>
                         <EditBook bookData={book} />
                         <DeleteBook
-                          id={book.id}
+                          id={book[0]}
                           openSnackbar={() => setSnackbarOpen(true)}
                         />
                       </div>
@@ -209,7 +216,7 @@ export default function BookTable({ bookData }) {
             height: "50px",
             textAlign: "center",
             margin: "70px 0",
-            fontSize: 'x-large',
+            fontSize: "x-large",
           }}
         >
           No Data

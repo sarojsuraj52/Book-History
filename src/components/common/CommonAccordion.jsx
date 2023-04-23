@@ -19,7 +19,7 @@ const CommonAccordion = ({ heading = "heading", children, icon }) => {
       <Accordion expanded={expanded} onChange={handleAccordionChange}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography
-            sx={{ display: "flex", alignItems: "center" }}
+            sx={{ display: "flex", alignItems: "center",pl:1.5 }}
             variant="h6"
           >
             {icon}&nbsp;{heading}
