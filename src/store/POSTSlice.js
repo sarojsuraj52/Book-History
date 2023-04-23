@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addBook = createAsyncThunk("mySlice/AddBook", async (data) => {
-  const response = await fetch("https://okokok-7fa48-default-rtdb.firebaseio.com/books.json", {
+  const response = await fetch("https://bookshistoryapp-default-rtdb.firebaseio.com/books.json", {
     method:'POST',
     headers: {
       'Content-Type': 'application/json'

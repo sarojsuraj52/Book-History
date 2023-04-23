@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const deleteBook = createAsyncThunk("mySlice/DeleteBook", async (id) => {
   const response = await fetch(
-    `https://okokok-7fa48-default-rtdb.firebaseio.com/books/${id}.json`,
+    `https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`,
     {
       method: "DELETE",
     }
