@@ -25,36 +25,41 @@ const bookSlice = createSlice({
       });
     },
     sortByTitle(state, action) {
+      state.booksArray = state.recoverBooksArray
       if (action.payload) {
-        state.booksArray.sort((a, b) => a.title.localeCompare(b.title));
+        state.booksArray = state.booksArray.sort((a,b)=>a[1].title.localeCompare(b[1].title));
       } else {
-        state.booksArray.sort((a, b) => b.title.localeCompare(a.title));
+        state.booksArray = state.booksArray.sort((a, b) => b[1].title.localeCompare(a[1].title));
       }
     },
     sortByPublicationDate(state, action) {
+      state.booksArray = state.recoverBooksArray
       if (action.payload) {
         state.booksArray = state.booksArray.sort((a, b) =>
-          a.publicationDate.localeCompare(b.publicationDate)
+          a[1].publicationDate.localeCompare(b[1].publicationDate)
         );
       } else {
         state.booksArray = state.booksArray.sort((a, b) =>
-          b.publicationDate.localeCompare(a.publicationDate)
+          b[1].publicationDate.localeCompare(a[1].publicationDate)
         );
       }
     },
     filterRead(state, action) {
+      state.booksArray = state.recoverBooksArray
       state.booksArray = state.booksArray.filter(
-        (book) => book.readingStatus === "read"
-      );
-    },
-    filterUnRead(state, action) {
+        (book) => book[[1]].readingStatus === "read"
+        );
+      },
+      filterUnRead(state, action) {
+      state.booksArray = state.recoverBooksArray
       state.booksArray = state.booksArray.filter(
-        (book) => book.readingStatus === "unread"
-      );
-    },
-    filterReading(state, action) {
+        (book) => book[1].readingStatus === "unread"
+        );
+      },
+      filterReading(state, action) {
+      state.booksArray = state.recoverBooksArray
       state.booksArray = state.booksArray.filter(
-        (book) => book.readingStatus === "reading"
+        (book) => book[1].readingStatus === "reading"
       );
     },
     clearFilter(state, action) {
