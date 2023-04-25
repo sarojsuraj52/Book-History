@@ -60,11 +60,12 @@ const FilterAccordion = () => {
           marginBottom: "5px",
           textTransform: "none",
           justifyContent: "flex-start",
+          fontWeight:600
         }}
         size="large"
         onClick={handleReadFilter}
       >
-        <BookIcon /> &nbsp;Read
+        <BookIcon color="primary"/> &nbsp;Read
       </Button>
       <Button
         color="inherit"
@@ -73,11 +74,12 @@ const FilterAccordion = () => {
           marginBottom: "5px",
           textTransform: "none",
           justifyContent: "flex-start",
+          fontWeight:600
         }}
         size="large"
         onClick={handleUnReadFilter}
       >
-        <PlayLessonIcon /> &nbsp;Unread
+        <PlayLessonIcon color="warning" /> &nbsp;Unread
       </Button>
       <Button
         color="inherit"
@@ -86,11 +88,12 @@ const FilterAccordion = () => {
           marginBottom: "5px",
           textTransform: "none",
           justifyContent: "flex-start",
+          fontWeight:600
         }}
         size="large"
         onClick={handleReadingFilter}
       >
-        <AutoStoriesIcon /> &nbsp;Reading
+        <AutoStoriesIcon color="secondary"/> &nbsp;Reading
       </Button>
       <Button
         color="error"
@@ -99,6 +102,7 @@ const FilterAccordion = () => {
           marginBottom: "5px",
           textTransform: "none",
           justifyContent: "flex-start",
+          fontWeight:600
         }}
         size="large"
         onClick={handleClearFilter}

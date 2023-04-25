@@ -32,11 +32,12 @@ const SortAccordion = () => {
           justifyContent: "flex-start",
           marginBottom: "5px",
           textTransform: "none",
+          fontWeight:550
         }}
         size="large"
         onClick={handleSortByTitle}
       >
-        <SortByAlphaIcon /> &nbsp;
+        <SortByAlphaIcon color='primary'/> &nbsp;
         <span>
           Title {`(${isTitleAscending ? "isDescending" : "isAscending"})`}
         </span>
@@ -48,11 +49,12 @@ const SortAccordion = () => {
           justifyContent: "flex-start",
           marginBottom: "5px",
           textTransform: "none",
+          fontWeight:600
         }}
         size="large"
         onClick={handleSortByPublicationDate}
       >
-        <CalendarMonthIcon /> &nbsp;Date{" "}
+        <CalendarMonthIcon color="secondary" /> &nbsp;Date{" "}
         {`(${isDateAscending ? "isDescending" : "isAscending"})`}
       </Button>
     </CommonAccordion>

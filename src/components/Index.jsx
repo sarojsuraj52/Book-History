@@ -17,10 +17,11 @@ const Index = () => {
   const addedBookId = useSelector((state) => state.post.data);
   const editBookId = useSelector((state) => state.put.data);
   const errorPOST = useSelector((state) => state.post.error);
-  // console.log(booksArray)
   
   const dispatch = useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarOpenLogin, setSnackbarOpenLogin] = useState(false);
+  
   
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
