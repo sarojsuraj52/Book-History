@@ -34,6 +34,20 @@ const Index = () => {
     dispatch(fetchBooks());
   }, [addedBookId, editBookId,deletedBookId]);
 
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      if (window.location.pathname === '/') {
+        event.preventDefault();
+        window.close();
+      }
+    };
+
+    window.addEventListener('popstate', handleBackButton);
+
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
   return (
     <>
       <Navbar />
