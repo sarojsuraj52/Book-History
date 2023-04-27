@@ -82,6 +82,7 @@ export default function BookTable({ bookData }) {
             <TableRow>
               <TableCell sx={{ fontSize: "1.02rem" }}> SR.NO </TableCell>
               <TableCell sx={{ fontSize: "1.02rem" }}>Title</TableCell>
+              <TableCell sx={{ fontSize: "1.02rem" }}>Publisher</TableCell>
               <TableCell sx={{ fontSize: "1.02rem" }}>Author</TableCell>
               <TableCell sx={{ fontSize: "1.02rem" }}>Pages</TableCell>
               <TableCell sx={{ fontSize: "1.02rem" }}>Genre</TableCell>
@@ -124,6 +125,15 @@ export default function BookTable({ bookData }) {
                       transition={{ delay: index * 0.1 }}
                     >
                       {book[1].title}
+                    </TableCell>
+                    <TableCell
+                      component={motion.td}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      {book[1].publisher}
                     </TableCell>
                     <TableCell
                       component={motion.td}

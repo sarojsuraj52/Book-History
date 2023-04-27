@@ -17,35 +17,34 @@ const Index = () => {
   const addedBookId = useSelector((state) => state.post.data);
   const editBookId = useSelector((state) => state.put.data);
   const errorPOST = useSelector((state) => state.post.error);
-  
+
   const dispatch = useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarOpenLogin, setSnackbarOpenLogin] = useState(false);
-  
-  
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
   };
-  
+
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [addedBookId, editBookId,deletedBookId]);
+  }, [addedBookId, editBookId, deletedBookId]);
 
   useEffect(() => {
     const handleBackButton = (event) => {
-      if (window.location.pathname === '/') {
+      if (window.location.pathname === "/") {
         event.preventDefault();
         window.close();
       }
     };
 
-    window.addEventListener('popstate', handleBackButton);
+    window.addEventListener("popstate", handleBackButton);
 
     return () => {
-      window.removeEventListener('popstate', handleBackButton);
+      window.removeEventListener("popstate", handleBackButton);
     };
   }, []);
   return (

@@ -1,17 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./authSlice";
-import bookSlice from "./bookSlice";
-import POSTSlice from "./POSTSlice";
-import PUTSlice from "./PUTSlice";
-import DELETESlice from "./DELETESlice";
+import rootReducer from "./combinedReducers";
 
 const store = configureStore({
-  reducer: {
-    auth: authSlice,
-    books: bookSlice,
-    post: POSTSlice,
-    put: PUTSlice,
-    delete: DELETESlice,
-  },
+  reducer: rootReducer,
 });
 export default store;

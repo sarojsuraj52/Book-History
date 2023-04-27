@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { DELETEAction, deleteBook } from "../../store/DELETESlice";
+import { deleteBook, deleteActions } from "../../store/bookSlice";
 import { motion } from "framer-motion";
 
 const DeleteBook = ({ id, openSnackbar }) => {
@@ -11,7 +11,7 @@ const DeleteBook = ({ id, openSnackbar }) => {
 
   const handleDelete = () => {
     dispatch(deleteBook(id));
-    !errorDELETE && dispatch(DELETEAction.updateId(id));
+    !errorDELETE && dispatch(deleteActions.updateId(id));
     openSnackbar();
   };
   return (

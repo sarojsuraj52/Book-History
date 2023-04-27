@@ -9,7 +9,7 @@ import BookIcon from "@mui/icons-material/Book";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
 import { useDispatch } from "react-redux";
-import { bookAction } from "../../store/bookSlice";
+import { bookActions } from "../../store/bookSlice";
 
 const bookGenres = [
   "Fiction",
@@ -39,16 +39,16 @@ const FilterAccordion = () => {
   const dispatch = useDispatch();
 
   const handleReadFilter = () => {
-    dispatch(bookAction.filterRead());
+    dispatch(bookActions.filterRead());
   };
   const handleUnReadFilter = () => {
-    dispatch(bookAction.filterUnRead());
+    dispatch(bookActions.filterUnRead());
   };
   const handleReadingFilter = () => {
-    dispatch(bookAction.filterReading());
+    dispatch(bookActions.filterReading());
   };
   const handleClearFilter = () => {
-    dispatch(bookAction.clearFilter());
+    dispatch(bookActions.clearFilter());
   };
 
   return (

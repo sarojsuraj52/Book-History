@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useDispatch, useSelector } from "react-redux";
-import { bookAction } from "../../store/bookSlice";
+import { bookActions } from "../../store/bookSlice";
 
 const SortAccordion = () => {
   const dispatch = useDispatch();
@@ -16,12 +16,12 @@ const SortAccordion = () => {
   
   const handleSortByTitle = () => {
     setIsTitleAscending((prev) => !prev);
-    dispatch(bookAction.sortByTitle(isTitleAscending));
+    dispatch(bookActions.sortByTitle(isTitleAscending));
   };
 
   const handleSortByPublicationDate = () => {
     setIsDateAscending((prev) => !prev);
-    dispatch(bookAction.sortByPublicationDate(isDateAscending));
+    dispatch(bookActions.sortByPublicationDate(isDateAscending));
   };
   return (
     <CommonAccordion heading="Sort" icon={<SortIcon />}>

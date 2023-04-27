@@ -4,7 +4,7 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
-import { bookAction } from "../store/bookSlice";
+import { bookActions } from "../store/bookSlice";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Button } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +25,7 @@ const SearchBar = () => {
     if (event && event.target) {
       setSearch(event.target.value);
     }
-    dispatch(bookAction.search(searchText));
+    dispatch(bookActions.search(searchText));
   };
 
   const handleKeyDown = (event) => {
@@ -35,10 +35,10 @@ const SearchBar = () => {
   };
 
   const clearFilter = () => {
-    dispatch(bookAction.clearFilter());
+    dispatch(bookActions.clearFilter());
   };
   const handleClearFilter = () => {
-    dispatch(bookAction.clearFilter());
+    dispatch(bookActions.clearFilter());
     setSearch("");
   };
 

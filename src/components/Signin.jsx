@@ -18,7 +18,6 @@ import Footer from "./layout/Footer";
 import { motion } from "framer-motion";
 
 const cred = {
-  name: "suraj saroj",
   email: "suraj@gmail.com",
   password: "12345678",
 };
@@ -27,7 +26,6 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const validationSchema = yup.object({
-    name: yup.string().required().min(4, "Min 4 character required"),
     email: yup
       .string()
       .email("Invalid email address")
@@ -40,14 +38,13 @@ const Signin = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values, action) => {
       if (JSON.stringify(cred) == JSON.stringify(values)) {
-        dispatch(authAction.login(values.name));
+        dispatch(authAction.login(values.email));
         alert("Login Successfull");
         navigate("/");
         action.resetForm();
@@ -78,23 +75,6 @@ const Signin = () => {
           noValidate
           sx={{ mt: 1 }}
         >
-          <TextField
-            margin="normal"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            fullWidth
-            label="Enter first and last name"
-            name="name"
-            autoComplete="name"
-            onBlur={formik.handleBlur}
-            color={formik.errors.name ? "warning" : ""}
-            helperText={
-              formik.errors.name && formik.touched.name
-                ? formik.errors.name
-                : ""
-            }
-            error={formik.errors.name && formik.touched.name}
-          />
 
           <TextField
             margin="normal"

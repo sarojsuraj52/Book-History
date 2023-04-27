@@ -28,7 +28,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userName = useSelector((state) => state.auth.userName);
+  const userEmail = useSelector((state) => state.auth.userEmail);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -135,11 +135,11 @@ function Navbar() {
             })}
           </Typography>
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
-            {userName.toUpperCase()}
+            {'SURAJ SAROJ'}
           </Typography>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt={userName || "user"} src="/" />
+              <Avatar alt={userEmail || "user"} src="/" />
             </IconButton>
           </Tooltip>
           <Menu

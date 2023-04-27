@@ -17,8 +17,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CommonModal from "./common/CommonModal";
 import { useDispatch, useSelector } from "react-redux";
-import { addBook } from "../store/POSTSlice";
-import { editBook } from "../store/PUTSlice";
+// import { addBook } from "../store/POSTSlice";
+import { addBook } from "../store/bookSlice";
+import { editBook } from "../store/bookSlice";
 
 const bookGenres = [
   "Fiction",
@@ -101,7 +102,7 @@ const BookForm = ({ open, onClose, method, bookData , openSnackbar}) => {
       dispatch(addBook(values));
       openSnackbar()
       // alert(errorPOST ? errorPOST : "Book Added");
-      // onClose();
+      onClose();
     }
     if (method == "PUT") {
       dispatch(editBook({data: values, id: bookData[0]}));
