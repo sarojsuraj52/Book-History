@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,9 +11,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authAction } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
+
 import Footer from "./layout/Footer";
 import { motion } from "framer-motion";
 
@@ -25,6 +26,14 @@ const cred = {
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state=> state.auth.isLoggedIn)
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   const validationSchema = yup.object({
     email: yup
       .string()

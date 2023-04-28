@@ -16,7 +16,6 @@ const style = {
   maxHeight: "600px",
   overflow: "auto",
   bgcolor: "background.paper",
-  border: "2px solid white",
   boxShadow: 10,
   p: 2,
   borderRadius: "5px",

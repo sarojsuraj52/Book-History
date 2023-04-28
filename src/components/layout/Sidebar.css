@@ -1,0 +1,22 @@
+.nav a.active {
+  background-color: #aad8ff;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 10px;
+  margin-top: 8px;
+  background-color: #f4edf7;
+  text-decoration: none;
+  color: "purple";
+  transition: all 0.3s;
+}
+.link:hover {
+  background-color: #e0e0eb;
+}
+
+.link:visited {
+  color: inherit;
+}

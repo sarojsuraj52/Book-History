@@ -14,7 +14,7 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 import { useDispatch, useSelector } from "react-redux";
 import { authAction } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../Sidebar";
+import Sidebar from "./Sidebar";
 import { AnimatePresence } from "framer-motion";
 import { Button } from "@material-ui/core";
 
@@ -56,8 +56,10 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
-      {/* <Container > */}
+    <AppBar
+      position="relative"
+      sx={{ zIndex: 1000, backgroundColor: "#038aff " }}
+    >
       <Toolbar
         disableGutters
         sx={{
@@ -74,30 +76,29 @@ function Navbar() {
           }}
         >
           <Button onClick={() => setState({ openSidebar: true })}>
-            <MenuIcon style={{ color: "white" }} />
+            <MenuIcon style={{ color: "white" ,marginBottom:'2px'}} />
           </Button>
           <Sidebar
             open={state.openSidebar}
             onOpen={showDrawer}
             onClose={() => setState({ openSidebar: false })}
           />
-          <TableChartIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <TableChartIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 ,mb:0.5}} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
-            sx={{
-              mr: 2,
+            style={{
+              marginRight: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              fontFamily: "sans-serif",
+              letterSpacing:2
             }}
           >
-            App
+            BookHistory
           </Typography>
         </Box>
 
@@ -109,14 +110,14 @@ function Navbar() {
             mr: 2,
             display: { xs: "flex", md: "none" },
             flexGrow: 1,
-            fontFamily: "monospace",
             fontWeight: 700,
-            letterSpacing: ".3rem",
             color: "inherit",
             textDecoration: "none",
+            fontFamily: "sans-serif",
+              letterSpacing:2
           }}
         >
-          App
+          BookHistory
         </Typography>
 
         <Box
@@ -135,7 +136,7 @@ function Navbar() {
             })}
           </Typography>
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
-            {'SURAJ SAROJ'}
+            {"SURAJ SAROJ"}
           </Typography>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -143,7 +144,7 @@ function Navbar() {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px", width: "100%" }}
+            sx={{ mt: "45px", width: "100% !important" }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{

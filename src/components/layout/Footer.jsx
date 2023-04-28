@@ -23,10 +23,10 @@ const Footer = () => {
           minHeight: "30px",
           padding: "8px",
           backgroundColor: "#f5f5f5",
-          borderRadius:3,
           display:'flex',
           justifyContent:'center',
           alignItems:'center',
+          zIndex:1
         }}
       >
         	&#169;
