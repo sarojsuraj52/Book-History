@@ -102,24 +102,6 @@ function Navbar() {
           </Typography>
         </Box>
 
-        <Typography
-          variant="h5"
-          noWrap
-          component="a"
-          sx={{
-            mr: 2,
-            display: { xs: "flex", md: "none" },
-            flexGrow: 1,
-            fontWeight: 700,
-            color: "inherit",
-            textDecoration: "none",
-            fontFamily: "sans-serif",
-              letterSpacing:2
-          }}
-        >
-          BookHistory
-        </Typography>
-
         <Box
           sx={{
             flexGrow: 0,
