@@ -33,7 +33,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
           }}
           transition={{ type: "spring", damping: 9 }}
         >
-          <div style={{ width: 300 }} role="presentation">
+          <div style={{ width: 270 }} role="presentation">
             <Typography
               color="primary"
               style={{
@@ -48,6 +48,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
             >
               <BookIcon fontSize=""  /> BookHistory
             </Typography>
+            <Divider />
             <Box
             className='nav'
               sx={{
@@ -56,7 +57,6 @@ const Sidebar = ({ open, onOpen, onClose }) => {
                 justifyContent: "center",
                 mt: 10,
                 fontFamily: "sans-serif",
-                // color:'#bb99ff'
               }}
             >
               <NavLink
