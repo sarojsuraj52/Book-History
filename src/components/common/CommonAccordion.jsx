@@ -17,7 +17,6 @@ const CommonAccordion = ({ heading = "heading", children, icon }) => {
   return (
     <div>
       <Accordion
-        defaultExpanded={true}
         // expanded={expanded}
         onChange={handleAccordionChange}
       >

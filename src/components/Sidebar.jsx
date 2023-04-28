@@ -31,10 +31,10 @@ const Sidebar = ({ open, onOpen, onClose }) => {
           transition={{ type: "spring", damping: 9 }}
         >
           <div style={{ width: 350 }} role="presentation">
-            <SearchBar />
+            {/* <SearchBar /> */}
             <Divider />
-            <SortAccordion />
-            <FilterAccordion />
+            {/* <SortAccordion /> */}
+            {/* <FilterAccord/ion /> */}
           </div>
         </Paper>
       </SwipeableDrawer>

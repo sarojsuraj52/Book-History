@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import CommonAccordion from "../common/CommonAccordion";
+// import React, { useState } from "react";
+// import CommonAccordion from "../common/CommonAccordion";
 import SortIcon from "@mui/icons-material/Sort";
 import Button from "@mui/material/Button";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
@@ -7,13 +7,18 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useDispatch, useSelector } from "react-redux";
 import { bookActions } from "../../store/bookSlice";
 
-const SortAccordion = () => {
-  const dispatch = useDispatch();
+import React, { useState } from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+
+function IconMenu() {
+  const [anchorEl, setAnchorEl] = useState(null);
   const [isTitleAscending, setIsTitleAscending] = useState(true);
   const [isDateAscending, setIsDateAscending] = useState(true);
-  const booksArray = useSelector((state) => state.books.booksArray);
-  // console.log(booksArray.map(e=>e).sort((a,b)=>a[1].title.localeCompare(b[1].title)))
-  
+  const dispatch = useDispatch();
+
   const handleSortByTitle = () => {
     setIsTitleAscending((prev) => !prev);
     dispatch(bookActions.sortByTitle(isTitleAscending));
@@ -23,42 +28,46 @@ const SortAccordion = () => {
     setIsDateAscending((prev) => !prev);
     dispatch(bookActions.sortByPublicationDate(isDateAscending));
   };
-  return (
-    <CommonAccordion heading="Sort" icon={<SortIcon />}>
-      <Button
-        color="inherit"
-        fullWidth
-        style={{
-          justifyContent: "flex-start",
-          marginBottom: "5px",
-          textTransform: "none",
-          fontWeight:550
-        }}
-        size="large"
-        onClick={handleSortByTitle}
-      >
-        <SortByAlphaIcon color='primary'/> &nbsp;
-        <span>
-          Title {`(${isTitleAscending ? "isDescending" : "isAscending"})`}
-        </span>
-      </Button>
-      <Button
-        color="inherit"
-        fullWidth
-        style={{
-          justifyContent: "flex-start",
-          marginBottom: "5px",
-          textTransform: "none",
-          fontWeight:600
-        }}
-        size="large"
-        onClick={handleSortByPublicationDate}
-      >
-        <CalendarMonthIcon color="secondary" /> &nbsp;Date{" "}
-        {`(${isDateAscending ? "isDescending" : "isAscending"})`}
-      </Button>
-    </CommonAccordion>
-  );
-};
 
-export default SortAccordion;
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <IconButton
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleSortByTitle}>
+          <SortByAlphaIcon color="primary" /> 
+          <span>
+          &nbsp;Title {`(${isTitleAscending ? "isDescending" : "isAscending"})`}{" "}
+          </span>
+        </MenuItem>
+        <MenuItem onClick={handleSortByPublicationDate} >
+        <CalendarMonthIcon color="secondary" />
+          <span>
+           &nbsp;Date{" "}
+          {`(${isDateAscending ? "isDescending" : "isAscending"})`}
+          </span>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
+export default IconMenu;

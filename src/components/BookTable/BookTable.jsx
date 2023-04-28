@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,6 +22,41 @@ import ViewBook from "./ViewBook";
 import EditBook from "./EditBook";
 import DeleteBook from "./DeleteBook";
 import { Typography } from "@material-ui/core";
+import { Toolbar } from "@mui/material";
+import { Tooltip } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { IconButton } from "@mui/material";
+import SortIcon from "@mui/icons-material/Sort";
+import SearchBar from "../SearchBar";
+import SortAccordion from "../Accordion/SortAccordion";
+import FilterAccordion from "../Accordion/filterAccordion";
+
+function EnhancedTableToolbar(props) {
+  return (
+    <Toolbar
+      sx={{
+        px: { sm: 1, md: 2, lg: 4 },
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Typography variant="h5">Book List</Typography>
+      <Box sx={{ display: "flex" }}>
+        <SearchBar />
+        <Tooltip title="Sort List">
+          <div>
+            <SortAccordion />
+          </div>
+        </Tooltip>
+        <Tooltip title="Sort List">
+          <div>
+            <FilterAccordion />
+          </div>
+        </Tooltip>
+      </Box>
+    </Toolbar>
+  );
+}
 
 const useStyles = makeStyles({
   tableCellHead: {
@@ -65,6 +100,12 @@ export default function BookTable({ bookData }) {
   const startIndex = (page - 1) * booksPerPage;
   const books = bookData?.slice(startIndex, startIndex + booksPerPage);
 
+  useEffect(() => {
+    if (books.length === 0) {
+      setPage((cur) => 1);
+    }
+  }, [books]);
+
   return (
     <>
       <TableContainer
@@ -77,32 +118,49 @@ export default function BookTable({ bookData }) {
         }}
         component={Paper}
       >
+        <EnhancedTableToolbar />
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontSize: "1.02rem" }}> SR.NO </TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }}>Title</TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }}>Publisher</TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }}>Author</TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }}>Pages</TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }}>Genre</TableCell>
-              <TableCell sx={{ fontSize: "1.02rem" }} align="center">
-                View More
-              </TableCell>
-              <TableCell
-                sx={{ fontSize: "1.02rem" }}
-                className={classes.tableCellHead}
-                align="center"
-              >
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
+          {bookData.length !== 0 && (
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontSize: "1.02rem" }}> SR.NO </TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }}>Title</TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }}>Publisher</TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }}>Author</TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }}>Pages</TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }}>Genre</TableCell>
+                <TableCell sx={{ fontSize: "1.02rem" }} align="center">
+                  View More
+                </TableCell>
+                <TableCell
+                  sx={{ fontSize: "1.02rem" }}
+                  className={classes.tableCellHead}
+                  align="center"
+                >
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+          )}
           <TableBody>
+            {bookData.length === 0 && (
+              <TableRow sx={{height:400}}>
+                <TableCell
+                  sx={{
+                    fontSize: "x-large",
+                  }}
+                  colSpan={3}
+                  align="center"
+                >
+                  No Data
+                </TableCell>
+              </TableRow>
+            )}
             {books.map((book, index) => {
               return (
                 book && (
                   <TableRow
+                    hover
                     key={book[0]}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
@@ -173,7 +231,10 @@ export default function BookTable({ bookData }) {
                       <Button
                         color="info"
                         component={motion.div}
-                        whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
+                        whileTap={{
+                          scale: 0.7,
+                          transition: { duration: 0.3 },
+                        }}
                         whileHover={{
                           scale: 1.1,
                           transition: { duration: 0.2 },
@@ -219,19 +280,6 @@ export default function BookTable({ bookData }) {
           )}
         </AnimatePresence>
       </TableContainer>
-      {bookData.length === 0 && (
-        <Typography
-          style={{
-            width: "100%",
-            height: "50px",
-            textAlign: "center",
-            margin: "70px 0",
-            fontSize: "x-large",
-          }}
-        >
-          No Data
-        </Typography>
-      )}
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2, mt: 3 }}>
         <Pagination
           count={numPages}

@@ -9,14 +9,6 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Button } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 
-// const data = [
-//     { id: 1, name: 'Apple' },
-//     { id: 2, name: 'Banana' },
-//     { id: 3, name: 'Cherry' },
-//     { id: 4, name: 'Date' },
-//     { id: 5, name: 'Elderberry' },
-//   ];
-
 const SearchBar = () => {
   const [searchText, setSearch] = React.useState("");
   const dispatch = useDispatch();
@@ -57,9 +49,8 @@ const SearchBar = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          my: 4,
-          mx: 2,
-          border: " 1px solid grey",
+          mx: 1,
+          border: "1px solid grey",
           borderRadius: 2,
         }}
       >
@@ -80,13 +71,13 @@ const SearchBar = () => {
           <Button
             layout={true}
             component={motion.button}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.5 }}
             color="error"
             fullWidth
-            style={{ justifyContent: "flex-start", marginBottom: 15 }}
+            style={{ justifyContent: "center",height:'40px',width:'174px'}}
             size="large"
             onClick={handleClearFilter}
           >

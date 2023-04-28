@@ -56,12 +56,10 @@ const Index = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          mt:5,
           p: 1,
         }}
       >
-        <Typography sx={{ mb: 4, mt: 3 }} component="h1" variant="h4">
-          Book List
-        </Typography>
         <BookTable bookData={booksArray} />
         <Button
           sx={{ marginY: 3 }}

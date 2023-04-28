@@ -1,41 +1,78 @@
-import React from "react";
-import CommonAccordion from "../common/CommonAccordion";
+// import CommonAccordion from "../common/CommonAccordion";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+// // import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+// import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import BookIcon from "@mui/icons-material/Book";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+// import { bookActions } from "../../store/bookSlice";
+// import React, { useState } from "react";
+// import Menu from "@mui/material/Menu";
+// import MenuItem from "@mui/material/MenuItem";
+// import IconButton from "@mui/material/IconButton";
+// import MenuIcon from "@mui/icons-material/Menu";
+
+
+// const FilterAccordion = () => {
+//   const [anchorE, setAnchorE] = useState(null);
+
+  
+//   const handleClick = (event) => {
+//     setAnchorE(event.currentTarget);
+//   };
+
+//   const handleClose = () => {
+//     setAnchorE(null);
+//   };
+
+//   return (
+//     <div>
+//     <IconButton
+//       aria-controls="simple-menu"
+//       aria-haspopup="true"
+//       onClick={handleClick}
+//     >
+//       <MenuIcon />
+//     </IconButton>
+//     <Menu
+//       id="simple-menu"
+//       anchorE={anchorE}
+//       open={Boolean(anchorE)}
+//       onClose={handleClose}
+//     >
+//       <MenuItem >
+//         {" "}
+//         {/* <CalendarMonthIcon color="secondary" /> &nbsp;Date{" "} */}
+//         Date
+//       </MenuItem>
+//     </Menu>
+//   </div>
+//   );
+// };
+
+// export default FilterAccordion;
+
+
+// import React, { useState } from "react";
+// import CommonAccordion from "../common/CommonAccordion";
+import SortIcon from "@mui/icons-material/Sort";
+import Button from "@mui/material/Button";
+import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { useDispatch, useSelector } from "react-redux";
 import { bookActions } from "../../store/bookSlice";
 
-const bookGenres = [
-  "Fiction",
-  "Non-fiction",
-  "Mystery",
-  "Thriller",
-  "Romance",
-  "Fantasy",
-  "Science fiction",
-  "Horror",
-  "Historical fiction",
-  "Biography",
-  "Autobiography",
-  "Memoir",
-  "Cookbooks",
-  "Travel",
-  "Self-help",
-  "Business",
-  "Young adult",
-  "Children",
-  "Poetry",
-  "Drama",
-  "Comedy",
-];
+import React, { useState } from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 
-const FilterAccordion = () => {
+function FilterAccordion() {
+  const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
 
   const handleReadFilter = () => {
@@ -51,66 +88,58 @@ const FilterAccordion = () => {
     dispatch(bookActions.clearFilter());
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <CommonAccordion heading="Filter" icon={<FilterAltIcon />}>
-      <Button
-        color="inherit"
-        fullWidth
-        style={{
-          marginBottom: "5px",
-          textTransform: "none",
-          justifyContent: "flex-start",
-          fontWeight:600
-        }}
-        size="large"
-        onClick={handleReadFilter}
+    <div>
+      <IconButton
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
       >
-        <BookIcon color="primary"/> &nbsp;Read
-      </Button>
-      <Button
-        color="inherit"
-        fullWidth
-        style={{
-          marginBottom: "5px",
-          textTransform: "none",
-          justifyContent: "flex-start",
-          fontWeight:600
-        }}
-        size="large"
-        onClick={handleUnReadFilter}
+        <FilterAltIcon />
+      </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
       >
-        <PlayLessonIcon color="warning" /> &nbsp;Unread
-      </Button>
-      <Button
-        color="inherit"
-        fullWidth
-        style={{
-          marginBottom: "5px",
-          textTransform: "none",
-          justifyContent: "flex-start",
-          fontWeight:600
-        }}
-        size="large"
-        onClick={handleReadingFilter}
-      >
-        <AutoStoriesIcon color="secondary"/> &nbsp;Reading
-      </Button>
-      <Button
-        color="error"
-        fullWidth
-        style={{
-          marginBottom: "5px",
-          textTransform: "none",
-          justifyContent: "flex-start",
-          fontWeight:600
-        }}
-        size="large"
-        onClick={handleClearFilter}
-      >
-        <HighlightOffIcon /> &nbsp;Clear Filter
-      </Button>
-    </CommonAccordion>
+        <MenuItem onClick={handleReadFilter}>
+          <BookIcon color="primary" /> 
+          <span>
+            &nbsp; Read
+          </span>
+        </MenuItem>
+        <MenuItem onClick={handleUnReadFilter}>
+          <AutoStoriesIcon color="secondary" /> 
+          <span>
+            &nbsp; Unread
+          </span>
+        </MenuItem>
+        <MenuItem onClick={handleReadingFilter}>
+          <PlayLessonIcon color="info" /> 
+          <span>
+            &nbsp; Unread
+          </span>
+        </MenuItem>
+        <MenuItem onClick={handleClearFilter}>
+          <HighlightOffIcon color="error" /> 
+          <span>
+            &nbsp; Clear Filter
+          </span>
+        </MenuItem>
+        
+      </Menu>
+    </div>
   );
-};
+}
 
 export default FilterAccordion;
+
