@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useCallback, Fragment } from "react";
 // import  { Container, } from 'tsparticles-engine';
@@ -16,6 +16,20 @@ const Dashboard = () => {
   const [openCommonModal, setCommonModal] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const errorPOST = useSelector((state) => state.post.error);
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault();
+      // Close the window or navigate to a different page
+      window.close();
+    };
+
+    window.addEventListener('popstate', handleBackButton);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {

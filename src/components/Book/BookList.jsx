@@ -19,19 +19,6 @@ const BookList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      event.preventDefault();
-      window.close();
-    };
-
-    window.addEventListener("popstate", handleBackButton);
-
-    return () => {
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, []);
-
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -42,21 +29,7 @@ const BookList = () => {
   useEffect(() => {
     dispatch(fetchBooks());
   }, [addedBookId, editBookId, deletedBookId]);
-
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      if (window.location.pathname === "/") {
-        event.preventDefault();
-        window.close();
-      }
-    };
-
-    window.addEventListener("popstate", handleBackButton);
-
-    return () => {
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, []);
+  
   return (
     <>
       {/* <Navbar /> */}

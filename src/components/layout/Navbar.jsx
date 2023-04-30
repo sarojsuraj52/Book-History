@@ -58,7 +58,7 @@ function Navbar() {
   return (
     <AppBar
       position="relative"
-      sx={{ zIndex: 1000, backgroundColor: "#038aff " }}
+      sx={{ zIndex: 1, backgroundColor: "#038aff " }}
     >
       <Toolbar
         disableGutters
