@@ -1,16 +1,18 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import authSlice from "./authSlice";
+import { authReducer } from "./authSlice";
 import { bookReducer } from "./bookSlice";
 import { postReducer } from "./bookSlice";
 import { putReducer } from "./bookSlice";
 import { deleteReducer } from "./bookSlice";
+import { bookStoreReducer } from "./bookStoreSlice";
 
 const rootReducer = combineReducers({
-  auth: authSlice,
+  auth: authReducer,
   books: bookReducer,
   post: postReducer,
   put: putReducer,
   delete: deleteReducer,
+  bookStore: bookStoreReducer,
 });
 
 export default rootReducer;

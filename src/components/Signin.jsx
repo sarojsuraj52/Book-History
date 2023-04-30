@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { authAction } from "../store/authSlice";
+import { authActions } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 
 import Footer from "./layout/Footer";
@@ -53,7 +53,7 @@ const Signin = () => {
     validationSchema: validationSchema,
     onSubmit: (values, action) => {
       if (JSON.stringify(cred) == JSON.stringify(values)) {
-        dispatch(authAction.login(values.email));
+        dispatch(authActions.login(values.email));
         alert("Login Successfull");
         navigate("/");
         action.resetForm();

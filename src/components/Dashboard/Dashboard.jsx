@@ -34,7 +34,14 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      sx={{ position: "relative" }}
+    >
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -126,12 +133,26 @@ const Dashboard = () => {
           <Box
             sx={{ maxWidth: { xs: "100%", sm: "50%" }, mb: { xs: 4, sm: 0 } }}
           >
-            {" "}
-            {/* adjust max-width and margin bottom based on screen size */}
-            <Typography variant="h2" component="h1" gutterBottom>
+            <Typography
+              component={motion.p}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.5 ,delay:0.5}}
+              sx={{ fontSize: "3.5rem" }}
+              gutterBottom
+            >
               Welcome to BookHistory, folks!
             </Typography>
-            <Typography variant="h5" component="p" gutterBottom>
+            <Typography
+              component={motion.p}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.5 ,delay:0.8}}
+              sx={{ fontSize: "1.5rem" }}
+              gutterBottom
+            >
               Gosh, I'm so excited to explore the magical world of books with
               you! Together, we'll learn about the history of books and the
               amazing stories they hold.
@@ -149,10 +170,14 @@ const Dashboard = () => {
               </AnimatePresence>
               <Button
                 component={motion.div}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.5 ,delay:1.1}}
                 whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
                 whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
                 variant="contained"
-                sx={{ backgroundColor: "white !important", color: "black" }}
+                sx={{ backgroundColor: "white !important", color: "black !important" }}
                 onClick={() => setCommonModal(true)}
               >
                 <b>Get Started</b>
@@ -164,7 +189,13 @@ const Dashboard = () => {
           >
             {" "}
             {/* adjust max-width and margin left based on screen size */}
-            <Box>
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.5 ,delay:1.4}}
+            >
               <video
                 src={Video}
                 autoPlay
@@ -192,9 +223,12 @@ const Dashboard = () => {
           }}
         >
           <Typography
-            variant="body1"
-            component="p"
-            style={{ display: "flex", alignItems: "center" }}
+            component={motion.p}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.5 ,delay:1.7}}
+            sx={{ fontSize: "1rem", display: "flex", alignItems: "center" }}
           >
             <BookIcon width={48} height={48} />
             &nbsp; BookHistory is a product of zCon Solutions Pvt Ltd. All

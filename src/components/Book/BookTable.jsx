@@ -71,9 +71,9 @@ export default function BookTable({ bookData }) {
   }
   const isMobile = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
-  const [page, setPage] = useState(1);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [page, setPage] = useState(1);
   const booksPerPage = 5;
   const numPages = Math.ceil(bookData.length / booksPerPage);
   const errorDELETE = useSelector((state) => state.delete.error);

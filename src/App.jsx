@@ -7,23 +7,22 @@ import { useSelector } from "react-redux";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Dashboard from "./components/Dashboard/Dashboard";
-import BookStore from './components/BookStore'
+import BookStore from "./components/BookStore/BookStore";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={isLoggedIn ? <Dashboard /> : <Navigate replace to="/auth" />}
-        />
-        <Route path="/auth" element={<Signin />} />
-        <Route path="/bookList" element={<BookList />} />
-        <Route path="/bookStore" element={<BookStore />} />
-      </Routes>
+      {isLoggedIn && <Navbar />}
+      <AnimatePresence>
+        <Routes>
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/auth" element={<Signin />} />
+          <Route path="/bookList" element={<BookList />} />
+          <Route path="/bookStore" element={<BookStore />} />
+        </Routes>
+      </AnimatePresence>
       <Footer />
     </div>
   );

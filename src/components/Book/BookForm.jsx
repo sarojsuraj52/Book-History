@@ -107,7 +107,6 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
       onClose();
       if (location.pathname == "/") {
         navigate("/bookList");
-        navigate("/bookList");
       }
     }
     if (method == "PUT") {
@@ -373,7 +372,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
               size="large"
               color="primary"
               type="submit"
-              sx={{whiteSpace:'noWrap'}}
+              sx={{ whiteSpace: "noWrap" }}
             >
               {method == "POST" ? "Add Book" : "Edit Book"}
             </Button>

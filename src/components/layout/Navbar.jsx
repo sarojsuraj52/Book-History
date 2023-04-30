@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import { useDispatch, useSelector } from "react-redux";
-import { authAction } from "../../store/authSlice";
+import { authActions } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { AnimatePresence } from "framer-motion";
@@ -39,7 +39,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    dispatch(authAction.logout());
+    dispatch(authActions.logout());
     navigate("/auth");
   };
 

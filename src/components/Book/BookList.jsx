@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../layout/Navbar";
-import Footer from "../layout/Footer";
 import { Box, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import BookForm from "./BookForm";
@@ -20,6 +18,19 @@ const BookList = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault();
+      window.close();
+    };
+
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, []);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -50,12 +61,17 @@ const BookList = () => {
     <>
       {/* <Navbar /> */}
       <Box
+        component={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          mt:5,
+          mt: 5,
           p: 1,
         }}
       >
