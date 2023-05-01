@@ -54,6 +54,7 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
+      layout
       sx={{ position: "relative" }}
     >
       <Particles
@@ -153,6 +154,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5 ,delay:0.5}}
+              layout
               sx={{ fontSize: "3.5rem" }}
               gutterBottom
             >
@@ -164,6 +166,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5 ,delay:0.8}}
+              layout
               sx={{ fontSize: "1.5rem" }}
               gutterBottom
             >
@@ -190,6 +193,7 @@ const Dashboard = () => {
                 transition={{ duration: 0.5 ,delay:1.1}}
                 whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
                 whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                layout
                 variant="contained"
                 sx={{ backgroundColor: "white !important", color: "black !important" }}
                 onClick={() => setCommonModal(true)}
@@ -209,6 +213,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5 ,delay:1.4}}
+              layout
             >
               <video
                 src={Video}
@@ -242,6 +247,7 @@ const Dashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5 ,delay:1.7}}
+            layout
             sx={{ fontSize: "1rem", display: "flex", alignItems: "center" }}
           >
             <BookIcon width={48} height={48} />

@@ -54,6 +54,7 @@ const BookList = () => {
           component={motion.div}
           whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+          layout
           size="large"
           variant="contained"
           color="success"

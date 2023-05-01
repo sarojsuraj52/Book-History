@@ -40,7 +40,9 @@ function EnhancedTableToolbar(props) {
         justifyContent: "space-between",
       }}
     >
-      <Typography variant="h5" style={{whiteSpace:'noWrap'}}>Book List</Typography>
+      <Typography variant="h5" style={{ whiteSpace: "noWrap" }}>
+        Book List
+      </Typography>
       <Box sx={{ display: "flex" }}>
         <SearchBar />
         <Tooltip title="Sort List">
@@ -144,7 +146,7 @@ export default function BookTable({ bookData }) {
           )}
           <TableBody>
             {bookData.length === 0 && (
-              <TableRow sx={{height:400}}>
+              <TableRow sx={{ height: 400 }}>
                 <TableCell
                   sx={{
                     fontSize: "x-large",
@@ -170,6 +172,7 @@ export default function BookTable({ bookData }) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
+                      layout
                     >
                       {page > 0
                         ? (page - 1) * booksPerPage + index + 1

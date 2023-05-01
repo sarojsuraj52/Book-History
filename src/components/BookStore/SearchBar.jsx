@@ -47,7 +47,7 @@ export default function SearchBar({ search }) {
       />
       <IconButton
         style={{ backgroundColor: "#038aff", borderRadius: 0, color: "white" }}
-        size="large"
+        size="large !important"
         onClick={handleSearch}
       >
         <SearchIcon />

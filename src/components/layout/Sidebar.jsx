@@ -24,7 +24,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
       >
         <Paper
           elevation={0}
-          layout={true}
+          layout
           sx={{ overflow: "hidden" }}
           component={motion.div}
           animate={{
