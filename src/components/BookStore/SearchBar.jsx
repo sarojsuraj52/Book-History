@@ -25,14 +25,13 @@ export default function SearchBar({ search }) {
 
   return (
     <Box
-      sx={{
+      style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         width: "fit-content",
-        pl: 3,
-        mx: "auto",
-        my: 5,
+        paddingLeft: 3,
+        margin: "30px auto",
         border: "1px solid #038aff",
         borderRadius: 5,
       }}
@@ -42,15 +41,14 @@ export default function SearchBar({ search }) {
         value={searchTerm}
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
-        sx={{ ml: 1, flex: 1 }}
+        style={{ marginLeft: '15px', flex: 1 }}
         onKeyDown={handleKeyDown}
       />
       <IconButton
         style={{ backgroundColor: "#038aff", borderRadius: 0, color: "white" }}
-        size="large !important"
         onClick={handleSearch}
       >
-        <SearchIcon />
+        <SearchIcon style={{fontSize:'2rem'}}/>
       </IconButton>
     </Box>
   );

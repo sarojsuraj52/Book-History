@@ -75,7 +75,6 @@ const Books = ({ bookStoreData, query }) => {
           whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
           onClick={() => setSelectedBook(null)}
-          sx={{ mb: 5 }}
         >
           Close Book
         </Button>
@@ -138,14 +137,14 @@ const Books = ({ bookStoreData, query }) => {
                     alt={book.volumeInfo.title}
                     className={classes.image}
                     style={{
-                      width: "80%",
+                      width: "70%",
                       height: "300px",
                       objectFit: "cover",
                       marginBottom: "1rem",
                       borderRadius: "5%",
                       maxWidth:
                         selectedBook && selectedBook.id === book.id
-                          ? "13%"
+                          ? "208px"
                           : "none",
                     }}
                   />
@@ -189,7 +188,7 @@ const Books = ({ bookStoreData, query }) => {
                         <b>Page Count: </b>
                         {selectedBook.volumeInfo.pageCount || "Not Available"}
                       </Typography>
-                      <Typography variant="subtitle1">
+                      <Typography variant="subtitle1" style={{wordBreak:'break-all'}}>
                         <b>Preview: </b>
                         <a
                           href={selectedBook.volumeInfo.previewLink}

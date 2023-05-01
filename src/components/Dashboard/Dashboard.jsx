@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useCallback, Fragment } from "react";
 // import  { Container, } from 'tsparticles-engine';
@@ -23,11 +23,11 @@ const Dashboard = () => {
       window.close();
     };
 
-    window.addEventListener('popstate', handleBackButton);
+    window.addEventListener("popstate", handleBackButton);
 
     return () => {
       // Clean up the event listener when the component is unmounted
-      window.removeEventListener('popstate', handleBackButton);
+      window.removeEventListener("popstate", handleBackButton);
     };
   }, []);
 
@@ -64,7 +64,7 @@ const Dashboard = () => {
         options={{
           background: {
             color: {
-              value: "#0d47a1",
+              value: "#1565c0", // change the background color
             },
           },
           fpsLimit: 60,
@@ -92,7 +92,7 @@ const Dashboard = () => {
           },
           particles: {
             color: {
-              value: "#ffffff",
+              value: "#ffffff", // change the particle color
             },
             links: {
               color: "#ffffff",
@@ -108,21 +108,21 @@ const Dashboard = () => {
               direction: "none",
               enable: true,
               outModes: {
-                default: "bounce",
+                default: "out",
               },
               random: false,
               speed: 2,
-              straight: false,
+              straight: true,
             },
             number: {
               density: {
                 enable: true,
                 area: 800,
               },
-              value: 80,
+              value: 50,
             },
             opacity: {
-              value: 0.5,
+              value: 0.6,
             },
             shape: {
               type: "circle",
@@ -134,6 +134,7 @@ const Dashboard = () => {
           detectRetina: true,
         }}
       />
+
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
@@ -153,9 +154,9 @@ const Dashboard = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.5 ,delay:0.5}}
+              transition={{ duration: 0.5, delay: 0.5 }}
               layout
-              sx={{ fontSize: "3.5rem" }}
+              style={{ fontSize: "3.5rem" }}
               gutterBottom
             >
               Welcome to BookHistory, folks!
@@ -165,9 +166,9 @@ const Dashboard = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.5 ,delay:0.8}}
+              transition={{ duration: 0.5, delay: 0.8 }}
               layout
-              sx={{ fontSize: "1.5rem" }}
+              style={{ fontSize: "1.5rem" }}
               gutterBottom
             >
               Gosh, I'm so excited to explore the magical world of books with
@@ -190,12 +191,15 @@ const Dashboard = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
-                transition={{ duration: 0.5 ,delay:1.1}}
+                transition={{ duration: 0.5, delay: 1.1 }}
                 whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
                 whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
                 layout
                 variant="contained"
-                sx={{ backgroundColor: "white !important", color: "black !important" }}
+                sx={{
+                  backgroundColor: "white !important",
+                  color: "black !important",
+                }}
                 onClick={() => setCommonModal(true)}
               >
                 <b>Get Started</b>
@@ -212,7 +216,7 @@ const Dashboard = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.5 ,delay:1.4}}
+              transition={{ duration: 0.5, delay: 1.4 }}
               layout
             >
               <video
@@ -246,9 +250,9 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.5 ,delay:1.7}}
+            transition={{ duration: 0.5, delay: 1.7 }}
             layout
-            sx={{ fontSize: "1rem", display: "flex", alignItems: "center" }}
+            style={{ fontSize: "1rem", display: "flex", alignItems: "center" }}
           >
             <BookIcon width={48} height={48} />
             &nbsp; BookHistory is a product of zCon Solutions Pvt Ltd. All

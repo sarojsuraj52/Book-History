@@ -9,12 +9,14 @@ import Footer from "./components/layout/Footer";
 import Dashboard from "./components/Dashboard/Dashboard";
 import BookStore from "./components/BookStore/BookStore";
 import { AnimatePresence } from "framer-motion";
+import { useLocation } from 'react-router-dom';
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const location = useLocation();
   return (
     <div className="App">
-      {isLoggedIn && <Navbar />}
+       {location.pathname !== '/auth' && <Navbar />}
       <AnimatePresence>
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
