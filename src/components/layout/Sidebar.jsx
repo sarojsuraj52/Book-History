@@ -50,12 +50,12 @@ const Sidebar = ({ open, onOpen, onClose }) => {
         onOpen={onOpen}
         onClose={onClose}
       >
-        <motion.div
+        <motion.span
           layout="position"
           animate={{
             opacity: open ? 1 : 0,
             x: open ? 0 : -50,
-            width: open ? (isSmallScreen ? 230 : 250) : 0,
+            // width: open ? (isSmallScreen ? 230 : 250) : 0,
             // transition: { duration: 1 },
           }}
           transition={{ type: "spring", damping: 13, stiffness: 160 }}
@@ -66,7 +66,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
           role="presentation"
           className="area"
         >
-          <div
+          <span
             style={{
               borderBottom: "1px solid lightgrey",
               backgroundColor: "white",
@@ -87,7 +87,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
             >
               <BookIcon fontSize="" /> BookHistory
             </Typography>
-          </div>
+          </span>
 
           <Box
             className="nav"
@@ -149,7 +149,7 @@ const Sidebar = ({ open, onOpen, onClose }) => {
               </NavLink>
             </motion.span>
           </Box>
-        </motion.div>
+        </motion.span>
         <AnimatedDiv />
       </SwipeableDrawer>
     </>
