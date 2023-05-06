@@ -1,43 +1,42 @@
-import React, { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import InfoIcon from "@mui/icons-material/Info";
-import { Button } from "@mui/material";
+import React, { useEffect, useState, useMemo } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Pagination,
+  PaginationItem,
+  Box,
+  useMediaQuery,
+  Toolbar,
+  Typography,
+  Tooltip,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
+import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMediaQuery } from "@mui/material";
+import { useSelector } from "react-redux";
 import SnackBar from "../common/SnackBar";
-import { useSelector, useDispatch } from "react-redux";
 import ViewBook from "./ViewBook";
 import EditBook from "./EditBook";
 import DeleteBook from "./DeleteBook";
-import { Typography } from "@material-ui/core";
-import { Toolbar } from "@mui/material";
-import { Tooltip } from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { IconButton } from "@mui/material";
-import SortIcon from "@mui/icons-material/Sort";
 import SearchBar from "./utilities/SearchBar";
 import Sort from "./utilities/Sort";
 import Filter from "./utilities/Filter";
 
-function EnhancedTableToolbar(props) {
-  
+function EnhancedTableToolbar() {
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
+
   return (
     <Toolbar
       sx={{
-        px: isSmallScreen ? 0:2,
+        px: isSmallScreen ? 0 : 2,
         display: "flex",
         justifyContent: "space-between",
       }}
@@ -48,14 +47,10 @@ function EnhancedTableToolbar(props) {
       <Box sx={{ display: "flex" }}>
         <SearchBar />
         <Tooltip title="Sort List">
-          <div>
-            <Sort />
-          </div>
+          <Sort />
         </Tooltip>
         <Tooltip title="Sort List">
-          <div>
-            <Filter />
-          </div>
+          <Filter />
         </Tooltip>
       </Box>
     </Toolbar>
@@ -69,11 +64,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookTable({ bookData }) {
+function BookTable({ bookData }) {
   if (!bookData) {
     return null;
   }
-  const isMobile = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -82,10 +76,7 @@ export default function BookTable({ bookData }) {
   const numPages = Math.ceil(bookData.length / booksPerPage);
   const errorDELETE = useSelector((state) => state.delete.error);
 
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
@@ -101,8 +92,10 @@ export default function BookTable({ bookData }) {
     setPage(value);
   };
 
-  const startIndex = (page - 1) * booksPerPage;
-  const books = bookData?.slice(startIndex, startIndex + booksPerPage);
+  const books = useMemo(
+    () => bookData?.slice((page - 1) * booksPerPage, page * booksPerPage),
+    [bookData, page, booksPerPage]
+  ); //slicing the book from start index and so on
 
   useEffect(() => {
     if (books.length === 0) {
@@ -114,8 +107,8 @@ export default function BookTable({ bookData }) {
     <>
       <TableContainer
         sx={{
-          padding:'25px',
-          width: '85%',
+          padding: "25px",
+          width: "85%",
           overflow: "auto",
           boxShadow:
             "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 5px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
@@ -309,3 +302,5 @@ export default function BookTable({ bookData }) {
     </>
   );
 }
+
+export default React.memo(BookTable);

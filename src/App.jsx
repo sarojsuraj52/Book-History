@@ -1,30 +1,59 @@
-import React, { useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import "./App.css";
-import Signin from "./components/Signin";
-import BookList from "./components/Book/BookList";
+import React, { useEffect, lazy, Suspense } from "react";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import Dashboard from "./components/Dashboard/Dashboard";
-import BookStore from "./components/BookStore/BookStore";
-import { AnimatePresence } from "framer-motion";
-import { useLocation } from 'react-router-dom';
+import "./App.css";
+import { CircularProgress } from "@mui/material";
+
+const Signin = lazy(() => import("./components/Signin"));
+const DashBoard = lazy(() => import("./components/Dashboard/Dashboard"));
+const BookList = lazy(() => import("./components/Book/BookList"));
+const BookStore = lazy(() => import("./components/BookStore/BookStore"));
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const location = useLocation();
   return (
     <div className="App">
-       {location.pathname !== '/auth' && <Navbar />}
+      {location.pathname !== "/auth" && <Navbar />}
       <AnimatePresence>
-        <Routes>
-          <Route exact path="/" element={<Dashboard />} />
-          <Route path="/auth" element={<Signin />} />
-          <Route path="/bookList" element={<BookList />} />
-          <Route path="/bookStore" element={<BookStore />} />
-          <Route path="/bookStore/:id" element={<BookStore />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "80vh",
+              }}
+            >
+              <CircularProgress size={40} />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/auth" element={<Signin />} />
+            <Route
+              exact
+              path="/"
+              element={isLoggedIn ? <DashBoard /> : <Navigate to="/auth" />}
+            />
+            <Route
+              path="/bookList"
+              element={isLoggedIn ? <BookList /> : <Navigate to="/auth" />}
+            />
+            <Route
+              path="/bookStore"
+              element={isLoggedIn ? <BookStore /> : <Navigate to="/auth" />}
+            />
+            <Route
+              path="/bookStore/:id"
+              element={isLoggedIn ? <BookStore /> : <Navigate to="/auth" />}
+            />
+          </Routes>
+        </Suspense>
       </AnimatePresence>
       <Footer />
     </div>

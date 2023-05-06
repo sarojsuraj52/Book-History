@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,11 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { AnimatePresence } from "framer-motion";
 import { Button } from "@material-ui/core";
 
-// const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Logout"];
+const MemoizedSidebar = React.memo(Sidebar);
 
 function Navbar() {
   const [state, setState] = useState({
@@ -28,7 +25,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userEmail = useSelector((state) => state.auth.userEmail);
+  const { userEmail } = useSelector((state) => state.auth);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -55,11 +52,16 @@ function Navbar() {
     setState({ openSidebar: true });
   };
 
+  const dateString = useMemo(() => {
+    return new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }, []);
+
   return (
-    <AppBar
-      position="relative"
-      sx={{ zIndex: 1, backgroundColor: "#038aff " }}
-    >
+    <AppBar position="relative" sx={{ zIndex: 1, backgroundColor: "#038aff " }}>
       <Toolbar
         disableGutters
         sx={{
@@ -76,14 +78,16 @@ function Navbar() {
           }}
         >
           <Button onClick={() => setState({ openSidebar: true })}>
-            <MenuIcon style={{ color: "white" ,marginBottom:'2px'}} />
+            <MenuIcon style={{ color: "white", marginBottom: "2px" }} />
           </Button>
-          <Sidebar
+          <MemoizedSidebar
             open={state.openSidebar}
             onOpen={showDrawer}
             onClose={() => setState({ openSidebar: false })}
           />
-          <TableChartIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 ,mb:0.5}} />
+          <TableChartIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1, mb: 0.5 }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -95,7 +99,7 @@ function Navbar() {
               color: "inherit",
               textDecoration: "none",
               fontFamily: "sans-serif",
-              letterSpacing:2
+              letterSpacing: 2,
             }}
           >
             BookHistory
@@ -111,16 +115,12 @@ function Navbar() {
           }}
         >
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
-            {new Date().toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {dateString}
           </Typography>
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
             {"SURAJ SAROJ"}
           </Typography>
-          <Tooltip title="Open settings">
+          <Tooltip className="okokokok" >
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt={userEmail || "user"} src="/" />
             </IconButton>
@@ -141,13 +141,13 @@ function Navbar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem  onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem  onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Setting</Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem  onClick={handleCloseUserMenu}>
               <Typography onClick={handleLogout}>Logout</Typography>
             </MenuItem>
           </Menu>

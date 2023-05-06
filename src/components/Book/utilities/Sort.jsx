@@ -1,13 +1,8 @@
-// import React, { useState } from "react";
-// import CommonAccordion from "../common/CommonAccordion";
-import SortIcon from "@mui/icons-material/Sort";
-import Button from "@mui/material/Button";
+import React, { useState } from "react";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useDispatch, useSelector } from "react-redux";
 import { bookActions } from "../../../store/bookSlice";
-
-import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
@@ -15,17 +10,29 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 function Sort() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isTitleAscending, setIsTitleAscending] = useState(true);
-  const [isDateAscending, setIsDateAscending] = useState(true);
+  const [isTitleAscending, setIsTitleAscending] = useState(null);
+  const [isDateAscending, setIsDateAscending] = useState(null);
   const dispatch = useDispatch();
 
   const handleSortByTitle = () => {
-    setIsTitleAscending((prev) => !prev);
+    setIsTitleAscending((prev) => {
+      if (prev == null) {
+        return true;
+      }
+      if (prev == true) return false;
+      if (prev == false) return true;
+    });
     dispatch(bookActions.sortByTitle(isTitleAscending));
   };
 
   const handleSortByPublicationDate = () => {
-    setIsDateAscending((prev) => !prev);
+    setIsDateAscending((prev) => {
+      if (prev == null) {
+        return true;
+      }
+      if (prev == true) return false;
+      if (prev == false) return true;
+    });
     dispatch(bookActions.sortByPublicationDate(isDateAscending));
   };
 
@@ -53,16 +60,25 @@ function Sort() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleSortByTitle}>
-          <SortByAlphaIcon color="primary" /> 
+          <SortByAlphaIcon color="primary" />
           <span>
-          &nbsp;Title {`(${isTitleAscending ? "isDescending" : "isAscending"})`}{" "}
+            &nbsp;Title{" "}
+            {isTitleAscending == null
+              ? ""
+              : isTitleAscending
+              ? "(Ascending)"
+              : "(Descending)"}
           </span>
         </MenuItem>
-        <MenuItem onClick={handleSortByPublicationDate} >
-        <CalendarMonthIcon color="secondary" />
+        <MenuItem onClick={handleSortByPublicationDate}>
+          <CalendarMonthIcon color="secondary" />
           <span>
-           &nbsp;Date{" "}
-          {`(${isDateAscending ? "isDescending" : "isAscending"})`}
+            &nbsp;Date{" "}
+            {isDateAscending == null
+              ? ""
+              : isDateAscending
+              ? "(Ascending)"
+              : "(Descending)"}
           </span>
         </MenuItem>
       </Menu>

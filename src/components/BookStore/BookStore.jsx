@@ -7,14 +7,15 @@ import { useSelector, useDispatch } from "react-redux";
 import Books from "./Books";
 import './BookStore.css'
 
-const BookStore = (props) => {
-  // console.log(data);
-  
+const BookStore = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
-  const bookStoreData = useSelector((state) => state.bookStore.books) || [];
+  const bookStoreData = useSelector((state) => state.bookStore.books);
 
-  // console.log(bookStoreData);
+  const handleSearch = React.useCallback((data) => {
+    setQuery(data);
+  }, []);
+  
 
   useEffect(() => {
     dispatch(getStoreBooks(query));
@@ -29,8 +30,8 @@ const BookStore = (props) => {
       transition={{ duration: 0.5 }}
       sx={{ width: "100%" }}
     >
-      <SearchBar search={(data) => setQuery(data)} />
-      <Books bookStoreData={bookStoreData} query={query} />
+      <SearchBar search={handleSearch} />
+      <Books bookStoreData={bookStoreData}  />
     </Box>
   );
 };

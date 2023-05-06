@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box/Box";
 import { Typography } from "@material-ui/core";
 import BookIcon from "@mui/icons-material/Book";
@@ -9,26 +8,61 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import "./Sidebar.css";
-import { useInView } from "react-intersection-observer";
+import { makeStyles } from "@material-ui/core/styles";
+import { useMediaQuery } from "@material-ui/core";
+import { motion, AnimatePresence } from "framer-motion";
+
+const AnimatedDiv = () => {
+  return (
+    <div className="animated-div-container">
+      <ul className="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  );
+};
 
 const Sidebar = ({ open, onOpen, onClose }) => {
+  const isSmallScreen = useMediaQuery("(max-width: 720px)");
+  const useStyles = makeStyles({
+    drawerPaper: {
+      overflow: "hidden",
+    },
+  });
+  const classes = useStyles();
   return (
     <>
       <SwipeableDrawer
-        role="okok"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
         sx={{ overflow: "hidden" }}
         open={open}
         onOpen={onOpen}
         onClose={onClose}
       >
         <motion.div
-          layout='position'
+          layout="position"
           animate={{
             opacity: open ? 1 : 0,
             x: open ? 0 : -50,
+            width: open ? (isSmallScreen ? 230 : 250) : 0,
+            // transition: { duration: 1 },
           }}
-          transition={{ duration: 5, type: "spring", damping: 10 }}
-          style={{ width: 270, overflow: "hidden" }}
+          transition={{ type: "spring", damping: 13, stiffness: 160 }}
+          style={{
+            // width: 270 ,
+            minWidth: isSmallScreen ? 230 : 250,
+          }}
           role="presentation"
           className="area"
         >
@@ -47,13 +81,14 @@ const Sidebar = ({ open, onOpen, onClose }) => {
                 margin: "10px 0",
                 padding: "5px",
                 color: "#038aff",
+                fontSize: isSmallScreen ? "1.9rem" : "2rem",
               }}
               variant="h4"
             >
               <BookIcon fontSize="" /> BookHistory
             </Typography>
           </div>
-          {/* <Divider /> */}
+
           <Box
             className="nav"
             sx={{
@@ -64,13 +99,13 @@ const Sidebar = ({ open, onOpen, onClose }) => {
               fontFamily: "sans-serif",
             }}
           >
-            <motion.div
+            <motion.span
               whileHover={{
                 boxShadow: "inset 300px 0 0 0 #2e9dff",
                 color: "#FFF",
+                transition: { duration: 0.2 },
               }}
-              transition={{ type: "spring", duration: 1, damping: 15 }}
-              layout
+              layout="position"
               style={{
                 color: "#000",
                 marginTop: "8px",
@@ -79,57 +114,46 @@ const Sidebar = ({ open, onOpen, onClose }) => {
               <NavLink to="/" className="link">
                 <DashboardIcon /> &nbsp;&nbsp;Dashboard
               </NavLink>
-            </motion.div>
+            </motion.span>
 
-            <motion.div
+            <motion.span
               whileHover={{
                 boxShadow: "inset 300px 0 0 0 #2e9dff",
-                color: "#FFF", // set initial color to animatable value
+                color: "#FFF",
+                transition: { duration: 0.2 },
               }}
-              transition={{ type: "spring", duration: 1, damping: 15 }}
-              layout
+              layout="position"
               style={{
-                color: "#000", // set initial color to animatable value
+                color: "#000",
                 marginTop: "8px",
               }}
             >
               <NavLink to="/bookList" className="link">
                 <ViewStreamIcon /> &nbsp;&nbsp;Book List
               </NavLink>
-            </motion.div>
-            <motion.div
+            </motion.span>
+            <motion.span
               whileHover={{
                 boxShadow: "inset 300px 0 0 0 #2e9dff",
-                color: "#FFF", // set initial color to animatable value
+                color: "#FFF",
+                transition: { duration: 0.2 },
               }}
-              transition={{ type: "spring", duration: 1, damping: 15 }}
-              layout
+              layout="position"
               style={{
-                color: "#000", // set initial color to animatable value
+                color: "#000",
                 marginTop: "8px",
               }}
             >
               <NavLink to="/bookStore" className="link">
                 <LocalMallIcon /> &nbsp;&nbsp;Book Store
               </NavLink>
-            </motion.div>
+            </motion.span>
           </Box>
-          <ul className="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
         </motion.div>
+        <AnimatedDiv />
       </SwipeableDrawer>
     </>
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

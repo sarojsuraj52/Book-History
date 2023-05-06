@@ -1,21 +1,21 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useCallback, Fragment } from "react";
-// import  { Container, } from 'tsparticles-engine';
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
-// import { Container as MuiContainer } from "@mui/material";
 import Video from "../../assets/book.mp4";
 import BookIcon from "@mui/icons-material/Book";
 import { motion, AnimatePresence } from "framer-motion";
 import BookForm from "../Book/BookForm";
 import { useDispatch, useSelector } from "react-redux";
 import SnackBar from "../common/SnackBar";
+import { useMediaQuery } from "@material-ui/core";
 
 const Dashboard = () => {
   const [openCommonModal, setCommonModal] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const errorPOST = useSelector((state) => state.post.error);
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -140,10 +140,10 @@ const Dashboard = () => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", sm: "row" }, // stack columns on small screens
+            flexDirection: { xs: "column", sm: "row" }, 
             alignItems: "center",
             justifyContent: "center",
-            minHeight: "100vh", // use min-height instead of height for flexibility
+            minHeight: "100vh",
             color: "white",
           }}
         >
@@ -157,7 +157,7 @@ const Dashboard = () => {
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               layout='position'
-              style={{ fontSize: "3.5rem" }}
+              style={{ fontSize: isSmallScreen?'2rem':'3.5rem' }}
               gutterBottom
             >
               Welcome to BookHistory, folks!
@@ -169,7 +169,7 @@ const Dashboard = () => {
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.8 }}
               layout='position'
-              style={{ fontSize: "1.5rem" }}
+              style={{ fontSize:  isSmallScreen?'1rem':'1.5rem'  }}
               gutterBottom
             >
               Gosh, I'm so excited to explore the magical world of books with
@@ -271,4 +271,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);

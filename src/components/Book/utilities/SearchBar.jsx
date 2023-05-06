@@ -18,8 +18,8 @@ const SearchBar = () => {
   const handleSubmit = (event) => {
     if (event && event.target) {
       setSearch(event.target.value);
+      dispatch(bookActions.search(searchText));
     }
-    dispatch(bookActions.search(searchText));
   };
 
   const handleKeyDown = (event) => {
@@ -50,7 +50,7 @@ const SearchBar = () => {
           mx: 1,
           border: "1px solid grey",
           borderRadius: 2,
-          minWidth:'100px'
+          minWidth: "100px",
         }}
       >
         <InputBase
@@ -62,20 +62,14 @@ const SearchBar = () => {
           onKeyDown={handleKeyDown}
         />
         {searchText.length !== 0 && (
-          <motion.div
-            style={{
-              color: isHovered ? "red" : "black",
-              scale: isHovered ? 1.2 : 1,
+          <CloseIcon
+            onClick={() => setSearch("")}
+            sx={{
+              cursor: "pointer",
               transition: "all 0.3s",
+              "&:hover": { color: "red", transform: "scale(1.2)" },
             }}
-            onMouseEnter={() => setIsHovered((prev) => !prev)}
-            onMouseLeave={() => setIsHovered((prev) => !prev)}
-          >
-            <CloseIcon
-              onClick={() => setSearch("")}
-              sx={{  cursor: "pointer" }}
-            />
-          </motion.div>
+          />
         )}
         <IconButton size="medium" onClick={handleSubmit}>
           <SearchIcon />

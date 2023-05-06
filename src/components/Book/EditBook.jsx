@@ -57,4 +57,4 @@ const EditBook = ({ bookData }) => {
   );
 };
 
-export default EditBook;
+export default React.memo(EditBook);

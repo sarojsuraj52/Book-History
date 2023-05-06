@@ -1,33 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useRef } from "react";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
 import { Grid, Typography, CircularProgress, Box } from "@material-ui/core";
-import { Button } from "@mui/material";
-import { Divider } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
+import { Pagination, PaginationItem, Button } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useSelector } from "react-redux";
 import noImage from "../../assets/noImage.png";
 import "./Book.css";
-import { useMediaQuery } from "@material-ui/core";
 
-const Books = ({ bookStoreData, query }) => {
-  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+const Books = ({ bookStoreData }) => {
+  const isSmallScreen = useMediaQuery("(max-width: 720px)");
   const isMediumScreen = useMediaQuery("(max-width: 960px)");
   const isMediumUpperScreen = useMediaQuery("(max-width: 1200px)");
-  const divRef = useRef(null);
 
-  const handleClick = (id) => {
-    const element = document.getElementById(id);
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = window.pageYOffset;
-    const scrollPosition = elementPosition  + offsetPosition;
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+    const imagePosition = document
+      .getElementById(book.id)
+      .getBoundingClientRect().top;
 
+    // Scroll to the top of the book image
     window.scrollTo({
-      top: scrollPosition + scrollPosition,
+      top: window.pageYOffset + imagePosition,
       behavior: "smooth",
     });
   };
@@ -48,7 +43,7 @@ const Books = ({ bookStoreData, query }) => {
     loading: {
       display: "block",
       margin: "auto",
-      marginTop: theme.spacing(25),
+      marginTop: theme.spacing(20),
     },
     bookTitle: {
       fontWeight: "bold",
@@ -82,7 +77,7 @@ const Books = ({ bookStoreData, query }) => {
   const status = useSelector((state) => state.bookStore.status);
   const [page, setPage] = useState(1);
   const booksPerPage = 10;
-  const numPages = Math.ceil(bookStoreData?.length / booksPerPage);
+  const numPages = Math.ceil(bookStoreData?.length / booksPerPage) || 0;
   const [selectedBook, setSelectedBook] = useState(null);
 
   const handlePageChange = (event, value) => {
@@ -108,19 +103,16 @@ const Books = ({ bookStoreData, query }) => {
         </Button>
       )}
       {bookStoreData?.length !== 0 && status == "loading" ? (
-        <CircularProgress className={classes.loading} size={60} />
+        <CircularProgress className={classes.loading} size={50} />
       ) : (
         <>
           <Grid
+          // component={motion.span}
             container
             style={{
               display: "flex",
               justifyContent: "center",
-              width: isSmallScreen
-                ? "100%"
-                : isMediumUpperScreen
-                ? "100%"
-                : "80%",
+              width: isSmallScreen ? "100%" : "80%",
               textAlign: "center",
             }}
           >
@@ -128,7 +120,7 @@ const Books = ({ bookStoreData, query }) => {
               <Grid
                 id={book.id}
                 className="book-container"
-                component={motion.div}
+                component={motion.span}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
@@ -136,23 +128,19 @@ const Books = ({ bookStoreData, query }) => {
                   delay: index * 0.1,
                   layout: { duration: 0.7, type: "spring", damping: 17 },
                 }}
-                layout="position"
+                layout={true}
                 item
                 xs={selectedBook && selectedBook.id === book.id ? 12 : 4}
                 sm={selectedBook && selectedBook.id === book.id ? 12 : 4}
                 md={selectedBook && selectedBook.id === book.id ? 12 : 2}
                 key={book.id}
-                onClick={() => {
-                  setSelectedBook(book);
-                  handleClick(book.id);
-                }}
+                onClick={() => handleBookClick(book)}
                 style={{
                   margin: isSmallScreen
                     ? selectedBook && selectedBook.id === book.id
                       ? "3rem 1.5rem"
-                      : "1rem"
+                      : "1.5rem"
                     : "3rem",
-                  marginBottom: isSmallScreen ? "3rem" : "5rem",
                   borderRadius: "15px",
                   padding:
                     selectedBook && selectedBook.id === book.id ? "15px" : "",
@@ -167,7 +155,7 @@ const Books = ({ bookStoreData, query }) => {
                   }}
                 >
                   <motion.img
-                    layout="position"
+                    layout={true}
                     src={book.volumeInfo.imageLinks?.thumbnail || noImage}
                     alt={book.volumeInfo.title}
                     className={classes.image}
@@ -179,7 +167,7 @@ const Books = ({ bookStoreData, query }) => {
                           ? "contain"
                           : "cover",
                       height: "auto",
-                      minHeight: isSmallScreen ? "150px" : "280px",
+                      // minHeight: isSmallScreen ? "150px" : "60px",
                       marginBottom: isSmallScreen ? "0" : "1rem",
                       maxWidth:
                         selectedBook && selectedBook.id === book.id
@@ -214,7 +202,8 @@ const Books = ({ bookStoreData, query }) => {
                         textAlign: "start",
                         padding: "15px",
                       }}
-                      component={motion.div}
+                      layout="position"
+                      component={motion.span}
                       initial={{ opacity: 0, y: -30 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -30 }}
@@ -253,7 +242,7 @@ const Books = ({ bookStoreData, query }) => {
             ))}
           </Grid>
 
-          {bookStoreData?.length !== 0 ? (
+          {numPages !== 0 ? (
             <Pagination
               className={classes.pagination}
               count={numPages}

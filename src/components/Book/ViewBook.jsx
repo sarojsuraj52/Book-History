@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, Dialog, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import CommonModal from "../common/CommonModal";
 import Shop2Icon from "@mui/icons-material/Shop2";
 import { useMediaQuery } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Badge } from "@mui/material";
 import { motion } from "framer-motion";
 
 const ViewBook = ({ book, onClose, open }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const [variant, setVariant] = useState("outlined");
+
   const useStyles = makeStyles((theme) => ({
     badge: {
       fontSize: isSmallScreen ? 4 : 8.5, // Change the font size as per your requirements
@@ -149,7 +148,9 @@ const ViewBook = ({ book, onClose, open }) => {
           />
         </Button>
         <Button
-          variant="contained"
+          variant={variant}
+          onMouseEnter={() => setVariant("contained")}
+          onMouseLeave={() => setVariant("outlined")}
           component={motion.div}
           whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}

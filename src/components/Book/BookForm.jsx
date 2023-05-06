@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {motion} from 'framer-motion'
 import {
   TextField,
   FormControl,
@@ -50,7 +51,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  // console.log(location)
+  const [variants, setVariants] = useState({ variant: "outlined", variant1: "outlined" });
 
   const validationSchema = yup.object({
     title: yup.string().required("Title is required").min(4),
@@ -101,20 +102,15 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
   });
 
   const onSubmit = (values) => {
-    if (method == "POST") {
-      dispatch(addBook(values));
-      openSnackbar();
-      onClose();
-      if (location.pathname == "/") {
-        navigate("/bookList");
-      }
-    }
-    if (method == "PUT") {
-      dispatch(editBook({ data: values, id: bookData[0] }));
-      openSnackbar();
-      onClose();
-    }
+    method === "POST"
+      ? dispatch(addBook(values))
+      : dispatch(editBook({ data: values, id: bookData[0] }));
+  
+    openSnackbar();
+    onClose();
+    location.pathname === "/" && navigate("/bookList");
   };
+  
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
@@ -369,7 +365,18 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
             sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
           >
             <Button
-              variant="contained"
+            type="button"
+              variant={variants.variant}
+              onMouseEnter={()=> setVariants(prev=>{
+                return {...prev,variant:'contained'}
+              })}
+              onMouseLeave={()=> setVariants(prev=>{
+                return {...prev,variant:'outlined'}
+              })}
+              component={motion.button}
+              whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              layout
               size="large"
               color="error"
               onClick={onClose}
@@ -378,7 +385,17 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
               Cancel
             </Button>
             <Button
-              variant="contained"
+              variant={variants.variant1}
+              onMouseEnter={()=> setVariants(prev=>{
+                return {...prev,variant1:'contained'}
+              })}
+              onMouseLeave={()=> setVariants(prev=>{
+                return {...prev,variant1:'outlined'}
+              })}
+              component={motion.button}
+              whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              layout
               size="large"
               color="primary"
               type="submit"
@@ -393,4 +410,4 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
   );
 };
 
-export default BookForm;
+export default React.memo(BookForm);

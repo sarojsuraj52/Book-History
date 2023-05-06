@@ -7,29 +7,29 @@ import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion } from "framer-motion";
 
-export default function SearchBar(props) {
+ function SearchBar({search}) {
   const params = useParams();
   const [searchTerm, setSearchTerm] = useState(params.id || "");
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleSearch = () => {
-    props.search(searchTerm);
-  };
-
-  const handleKeyDown = (event) => {
+  const handleSearch = React.useCallback(() => {
+    search(searchTerm);
+  }, [search, searchTerm]);
+  
+  const handleKeyDown = React.useCallback((event) => {
     if (event.key === "Enter") {
       handleSearch();
     }
-  };
+  }, [handleSearch]);
+  
 
   useEffect(() => {
     handleSearch();
-    // if (searchTerm.length > -1) {
-    // }
   }, []);
+  
 
   return (
-    <Box style={{ margin: "0 1rem" }}>
+    <Box style={{ margin: "0 1rem"}}>
       <Box
         style={{
           display: "flex",
@@ -80,3 +80,5 @@ export default function SearchBar(props) {
     </Box>
   );
 }
+
+export default React.memo(SearchBar)

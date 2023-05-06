@@ -10,29 +10,24 @@ import SnackBar from "../common/SnackBar";
 
 const BookList = () => {
   const [openCommonModal, setCommonModal] = React.useState(false);
-  const booksArray = useSelector((state) => state.books.booksArray);
+  const { booksArray } = useSelector((state) => state.books);
   const deletedBookId = useSelector((state) => state.delete.data);
   const addedBookId = useSelector((state) => state.post.data);
   const editBookId = useSelector((state) => state.put.data);
   const errorPOST = useSelector((state) => state.post.error);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
   const dispatch = useDispatch();
 
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
   useEffect(() => {
     dispatch(fetchBooks());
   }, [addedBookId, editBookId, deletedBookId]);
-  
+
   return (
     <>
-      {/* <Navbar /> */}
       <Box
         component={motion.div}
         initial={{ opacity: 0 }}
@@ -73,7 +68,6 @@ const BookList = () => {
           />
         )}
       </AnimatePresence>
-      {/* <Footer /> */}
       <SnackBar
         open={snackbarOpen}
         handleClose={handleSnackbarClose}

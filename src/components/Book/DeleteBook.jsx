@@ -9,25 +9,24 @@ const DeleteBook = ({ id, openSnackbar }) => {
   const dispatch = useDispatch();
   const errorDELETE = useSelector((state) => state.delete.error);
 
-  const handleDelete = () => {
+  const handleDelete = React.useCallback(() => {
     dispatch(deleteBook(id));
     !errorDELETE && dispatch(deleteActions.updateId(id));
     openSnackbar();
-  };
+  }, [dispatch, id, errorDELETE, openSnackbar]);
+
   return (
-    <div>
-      <Button
+    <Button
       variant="outlined"
-        component={motion.div}
-        whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
-        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-        onClick={handleDelete}
-        color="error"
-      >
-        <DeleteIcon /> &nbsp; <span>Delete</span>
-      </Button>
-    </div>
+      component={motion.div}
+      whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
+      whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+      onClick={handleDelete}
+      color="error"
+    >
+      <DeleteIcon /> &nbsp; <span>Delete</span>
+    </Button>
   );
 };
 
-export default DeleteBook;
+export default React.memo(DeleteBook);

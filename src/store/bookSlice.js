@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
-  const response = await fetch(
+  const response = await axios.get(
     "https://bookshistoryapp-default-rtdb.firebaseio.com/books.json"
   );
-  let data = await response.json();
-  data = Object.entries(data);
-  return data;
+  const data = response.data;
+  return Object.entries(data);
 });
 
 const bookSlice = createSlice({
@@ -21,11 +21,12 @@ const bookSlice = createSlice({
     searchBookOnStore(state, action) {
       state.searchBookOnStore = action.payload;
     },
-    search(state, action) {
+    search: (state, action) => {
+      const query = action.payload.toLowerCase();
       state.booksArray = state.booksArray.filter((book) => {
         const bookValues = Object.values(book[1]);
         return bookValues.some((value) =>
-           String(value)?.toLowerCase().includes(action.payload?.toLowerCase())
+          String(value).toLowerCase().includes(query)
         );
       });
     },
@@ -33,11 +34,11 @@ const bookSlice = createSlice({
       state.booksArray = state.recoverBooksArray;
       if (action.payload) {
         state.booksArray = state.booksArray.sort((a, b) =>
-          a[1].title.localeCompare(b[1].title)
+          b[1].title.localeCompare(a[1].title)
         );
       } else {
         state.booksArray = state.booksArray.sort((a, b) =>
-          b[1].title.localeCompare(a[1].title)
+          a[1].title.localeCompare(b[1].title)
         );
       }
     },
@@ -45,11 +46,11 @@ const bookSlice = createSlice({
       state.booksArray = state.recoverBooksArray;
       if (action.payload) {
         state.booksArray = state.booksArray.sort((a, b) =>
-          a[1].publicationDate.localeCompare(b[1].publicationDate)
+          b[1].publicationDate.localeCompare(a[1].publicationDate)
         );
       } else {
         state.booksArray = state.booksArray.sort((a, b) =>
-          b[1].publicationDate.localeCompare(a[1].publicationDate)
+          a[1].publicationDate.localeCompare(b[1].publicationDate)
         );
       }
     },
@@ -72,7 +73,7 @@ const bookSlice = createSlice({
       );
     },
     clearFilter(state, action) {
-      state.booksArray = [...state.recoverBooksArray];
+      state.booksArray = state.recoverBooksArray;
     },
   },
   extraReducers: (builder) => {
@@ -99,17 +100,11 @@ export const {
 } = bookSlice;
 
 export const addBook = createAsyncThunk("mySlice/AddBook", async (data) => {
-  const response = await fetch(
+  const response = await axios.post(
     "https://bookshistoryapp-default-rtdb.firebaseio.com/books.json",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
+    data
   );
-  return await response.json();
+  return response.data;
 });
 
 const POSTSlice = createSlice({
@@ -146,17 +141,11 @@ export const {
 export const editBook = createAsyncThunk(
   "mySlice/editBook",
   async ({ data, id }) => {
-    const response = await fetch(
+    const response = await axios.put(
       `https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
+      data
     );
-    return await response.json();
+    return response.data;
   }
 );
 
@@ -192,15 +181,10 @@ export const {
 } = PUTSlice;
 
 export const deleteBook = createAsyncThunk("mySlice/DeleteBook", async (id) => {
-  const response = await fetch(
-    `https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`,
-    {
-      method: "DELETE",
-    }
+  const response = await axios.delete(
+    `https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`
   );
-
-  const data = await response.json();
-  return data;
+  return response.data;
 });
 
 const DELETESlice = createSlice({

@@ -35,19 +35,19 @@ export default function CommonModal({ onClose, open, children }) {
           justifyContent: "center",
         }}
       >
-        <motion.div
-          style={{ width: "100%",scrollBehavior:'smooth' }}
+        <motion.span
+          style={{ width: "100%", scrollBehavior: "smooth" }}
           initial={{ scale: 0, opacity: 0 }}
           animate={{
             scale: 1,
             opacity: 1,
-            transition: { duration: 1, type: "spring", damping: 11.5 },
+            transition: {  type: "spring",damping:17,stiffness:150 },
           }}
           exit={{ scale: 0.3, opacity: 0, transition: { duration: 0.3 } }}
           layout
         >
           <Box sx={style}>{children}</Box>
-        </motion.div>
+        </motion.span>
       </Modal>
     </>
   );

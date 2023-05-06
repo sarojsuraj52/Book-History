@@ -3,12 +3,10 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import BookIcon from "@mui/icons-material/Book";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bookActions } from "../../../store/bookSlice";
 import React, { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
+import { Menu, MenuItem, IconButton } from "@mui/material";
 
 function Filter() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,7 +34,7 @@ function Filter() {
   };
 
   return (
-    <div>
+    <>
       <IconButton
         aria-controls="simple-menu"
         aria-haspopup="true"
@@ -51,34 +49,24 @@ function Filter() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleReadFilter}>
-          <BookIcon color="primary" /> 
-          <span>
-            &nbsp; Read
-          </span>
+          <BookIcon color="primary" />
+          <span>&nbsp; Read</span>
         </MenuItem>
         <MenuItem onClick={handleUnReadFilter}>
-          <AutoStoriesIcon color="secondary" /> 
-          <span>
-            &nbsp; Unread
-          </span>
+          <AutoStoriesIcon color="secondary" />
+          <span>&nbsp; Unread</span>
         </MenuItem>
         <MenuItem onClick={handleReadingFilter}>
-          <PlayLessonIcon color="info" /> 
-          <span>
-            &nbsp; Unread
-          </span>
+          <PlayLessonIcon color="info" />
+          <span>&nbsp; Unread</span>
         </MenuItem>
         <MenuItem onClick={handleClearFilter}>
-          <HighlightOffIcon color="error" /> 
-          <span>
-            &nbsp; Clear Filter
-          </span>
+          <HighlightOffIcon color="error" />
+          <span>&nbsp; Clear Filter</span>
         </MenuItem>
-        
       </Menu>
-    </div>
+    </>
   );
 }
 
 export default Filter;
-
