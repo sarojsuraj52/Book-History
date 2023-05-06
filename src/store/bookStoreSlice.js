@@ -11,7 +11,7 @@ export const getStoreBooks = createAsyncThunk(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}&maxResults=40`
       );
       return response.data.items;
-    } 
+    }
   }
 );
 
@@ -23,9 +23,6 @@ const bookStoreSlice = createSlice({
     error: null,
   },
   reducers: {
-    clearBooks(state, action) {
-      state.books = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder

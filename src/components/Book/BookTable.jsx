@@ -32,10 +32,12 @@ import Sort from "./utilities/Sort";
 import Filter from "./utilities/Filter";
 
 function EnhancedTableToolbar(props) {
+  
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
   return (
     <Toolbar
       sx={{
-        px: { sm: 0, md: 2, lg: 4 },
+        px: isSmallScreen ? 0:2,
         display: "flex",
         justifyContent: "space-between",
       }}
@@ -112,11 +114,11 @@ export default function BookTable({ bookData }) {
     <>
       <TableContainer
         sx={{
-          width: {
-            xs: "100%",
-            md: "85%",
-            overflow: isMobile ? "auto" : "hidden",
-          },
+          padding:'25px',
+          width: '85%',
+          overflow: "auto",
+          boxShadow:
+            "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 5px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
         }}
         component={Paper}
       >
@@ -232,6 +234,7 @@ export default function BookTable({ bookData }) {
                       transition={{ delay: index * 0.1 }}
                     >
                       <Button
+                        // variant={whileHover?'contained':'text'}
                         color="info"
                         component={motion.div}
                         whileTap={{

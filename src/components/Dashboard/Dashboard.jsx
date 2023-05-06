@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useCallback, Fragment } from "react";
 // import  { Container, } from 'tsparticles-engine';
@@ -16,20 +16,6 @@ const Dashboard = () => {
   const [openCommonModal, setCommonModal] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const errorPOST = useSelector((state) => state.post.error);
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      event.preventDefault();
-      // Close the window or navigate to a different page
-      window.close();
-    };
-
-    window.addEventListener("popstate", handleBackButton);
-
-    return () => {
-      // Clean up the event listener when the component is unmounted
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, []);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -47,6 +33,20 @@ const Dashboard = () => {
     await console.log();
   }, []);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Box
       component={motion.div}
@@ -55,7 +55,8 @@ const Dashboard = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
       layout
-      sx={{ position: "relative" }}
+      style={{ position: "relative"}}
+      
     >
       <Particles
         id="tsparticles"
@@ -155,7 +156,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              layout
+              layout='position'
               style={{ fontSize: "3.5rem" }}
               gutterBottom
             >
@@ -167,7 +168,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              layout
+              layout='position'
               style={{ fontSize: "1.5rem" }}
               gutterBottom
             >
@@ -194,7 +195,7 @@ const Dashboard = () => {
                 transition={{ duration: 0.5, delay: 1.1 }}
                 whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
                 whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                layout
+                layout='position'
                 variant="contained"
                 sx={{
                   backgroundColor: "white !important",
@@ -217,7 +218,7 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 1.4 }}
-              layout
+              layout='position'
             >
               <video
                 src={Video}
@@ -251,7 +252,7 @@ const Dashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5, delay: 1.7 }}
-            layout
+            layout='position'
             style={{ fontSize: "1rem", display: "flex", alignItems: "center" }}
           >
             <BookIcon width={48} height={48} />

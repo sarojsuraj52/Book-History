@@ -8,9 +8,11 @@ import { bookActions } from "../../../store/bookSlice";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Button } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
+import CloseIcon from "@mui/icons-material/Close";
 
 const SearchBar = () => {
   const [searchText, setSearch] = React.useState("");
+  const [isHovered, setIsHovered] = React.useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -21,7 +23,7 @@ const SearchBar = () => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && searchText.length !== 0) {
+    if (event.key === "Enter" && searchText?.length !== 0) {
       handleSubmit();
     }
   };
@@ -29,13 +31,9 @@ const SearchBar = () => {
   const clearFilter = () => {
     dispatch(bookActions.clearFilter());
   };
-  const handleClearFilter = () => {
-    dispatch(bookActions.clearFilter());
-    setSearch("");
-  };
 
   React.useEffect(() => {
-    if (searchText.length === 0) {
+    if (searchText?.length === 0) {
       clearFilter();
     } else {
       clearFilter();
@@ -52,39 +50,37 @@ const SearchBar = () => {
           mx: 1,
           border: "1px solid grey",
           borderRadius: 2,
+          minWidth:'100px'
         }}
       >
         <InputBase
           onChange={(e) => handleSubmit(e)}
-          value={searchText}
+          value={searchText || ""}
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
           sx={{ ml: 1, flex: 1 }}
           onKeyDown={handleKeyDown}
         />
+        {searchText.length !== 0 && (
+          <motion.div
+            style={{
+              color: isHovered ? "red" : "black",
+              scale: isHovered ? 1.2 : 1,
+              transition: "all 0.3s",
+            }}
+            onMouseEnter={() => setIsHovered((prev) => !prev)}
+            onMouseLeave={() => setIsHovered((prev) => !prev)}
+          >
+            <CloseIcon
+              onClick={() => setSearch("")}
+              sx={{  cursor: "pointer" }}
+            />
+          </motion.div>
+        )}
         <IconButton size="medium" onClick={handleSubmit}>
           <SearchIcon />
         </IconButton>
       </Box>
-      <AnimatePresence>
-        {searchText.length !== 0 && (
-          <Button
-            layout={true}
-            component={motion.button}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
-            color="error"
-            fullWidth
-            style={{ justifyContent: "center",height:'40px',width:'100px'}}
-            size="large"
-            onClick={handleClearFilter}
-          >
-            <HighlightOffIcon /> &nbsp;CLEAR 
-          </Button>
-        )}
-      </AnimatePresence>
     </>
   );
 };

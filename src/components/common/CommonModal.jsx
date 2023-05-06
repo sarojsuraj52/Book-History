@@ -36,15 +36,14 @@ export default function CommonModal({ onClose, open, children }) {
         }}
       >
         <motion.div
-          style={{ width: "100%" }}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          exit={{ scale: 0, transition: { duration: 0.28 } }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 23,
+          style={{ width: "100%",scrollBehavior:'smooth' }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: 1,
+            opacity: 1,
+            transition: { duration: 1, type: "spring", damping: 11.5 },
           }}
+          exit={{ scale: 0.3, opacity: 0, transition: { duration: 0.3 } }}
           layout
         >
           <Box sx={style}>{children}</Box>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, CircularProgress, Box } from "@material-ui/core";
-import { Button, duration } from "@mui/material";
-// import { Pagination } from "@material-ui/lab";
+import { Button } from "@mui/material";
+import { Divider } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,44 +11,73 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useSelector } from "react-redux";
 import noImage from "../../assets/noImage.png";
-import './Book.css'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // padding: theme.spacing(3),
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  title: {
-    display: "flex",
-    alignItems: "center",
-  },
-  loading: {
-    display: "block",
-    margin: "auto",
-    marginTop: theme.spacing(3),
-  },
-  bookTitle: {
-    fontWeight: "bold",
-  },
-  bookAuthor: {
-    color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(1),
-  },
-  link: {
-    textDecoration: "none",
-    color: "inherit",
-  },
-  pagination: {
-    marginTop: theme.spacing(3),
-    display: "flex",
-    justifyContent: "center",
-  },
-}));
+import "./Book.css";
+import { useMediaQuery } from "@material-ui/core";
 
 const Books = ({ bookStoreData, query }) => {
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const isMediumScreen = useMediaQuery("(max-width: 960px)");
+  const isMediumUpperScreen = useMediaQuery("(max-width: 1200px)");
+  const divRef = useRef(null);
+
+  const handleClick = (id) => {
+    const element = document.getElementById(id);
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = window.pageYOffset;
+    const scrollPosition = elementPosition  + offsetPosition;
+
+    window.scrollTo({
+      top: scrollPosition + scrollPosition,
+      behavior: "smooth",
+    });
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      marginTop: isSmallScreen ? "0" : "5rem",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
+    },
+    title: {
+      display: "flex",
+      alignItems: "center",
+      fontSize: "3rem",
+    },
+    loading: {
+      display: "block",
+      margin: "auto",
+      marginTop: theme.spacing(25),
+    },
+    bookTitle: {
+      fontWeight: "bold",
+      fontSize: isMediumScreen
+        ? "0.88rem"
+        : isSmallScreen
+        ? "0.8rem"
+        : "1.2rem",
+      marginTop: isSmallScreen ? "1rem" : "0",
+    },
+    bookAuthor: {
+      color: theme.palette.text.secondary,
+      marginBottom: theme.spacing(1),
+      fontSize: isMediumScreen
+        ? "0.75rem"
+        : isSmallScreen
+        ? "0.85rem"
+        : "0.98rem",
+    },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+    },
+    pagination: {
+      marginTop: theme.spacing(3),
+      display: "flex",
+      justifyContent: "center",
+    },
+  }));
   const classes = useStyles();
   const status = useSelector((state) => state.bookStore.status);
   const [page, setPage] = useState(1);
@@ -63,8 +92,6 @@ const Books = ({ bookStoreData, query }) => {
   const startIndex = (page - 1) * booksPerPage;
   const books = bookStoreData?.slice(startIndex, startIndex + booksPerPage);
 
-  const [open, setOpen] = useState(false);
-
   return (
     <div className={classes.root}>
       {selectedBook && (
@@ -75,12 +102,13 @@ const Books = ({ bookStoreData, query }) => {
           whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
           whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
           onClick={() => setSelectedBook(null)}
+          sx={{ my: isSmallScreen ? 3 : 0 }}
         >
           Close Book
         </Button>
       )}
       {bookStoreData?.length !== 0 && status == "loading" ? (
-        <CircularProgress className={classes.loading} />
+        <CircularProgress className={classes.loading} size={60} />
       ) : (
         <>
           <Grid
@@ -88,13 +116,17 @@ const Books = ({ bookStoreData, query }) => {
             style={{
               display: "flex",
               justifyContent: "center",
-              // width: "70%",
+              width: isSmallScreen
+                ? "100%"
+                : isMediumUpperScreen
+                ? "100%"
+                : "80%",
               textAlign: "center",
-              maxHeight: "50%",
             }}
           >
             {books?.map((book, index) => (
               <Grid
+                id={book.id}
                 className="book-container"
                 component={motion.div}
                 initial={{ opacity: 0, y: 50 }}
@@ -102,34 +134,37 @@ const Books = ({ bookStoreData, query }) => {
                 exit={{ opacity: 0, y: 50 }}
                 transition={{
                   delay: index * 0.1,
-                  layout: { duration: 0.7, type: "spring" },
+                  layout: { duration: 0.7, type: "spring", damping: 17 },
                 }}
-                layout
+                layout="position"
                 item
-                xs={12}
+                xs={selectedBook && selectedBook.id === book.id ? 12 : 4}
                 sm={selectedBook && selectedBook.id === book.id ? 12 : 4}
-                // xs={12}
                 md={selectedBook && selectedBook.id === book.id ? 12 : 2}
                 key={book.id}
-                onClick={() => setSelectedBook(book)}
+                onClick={() => {
+                  setSelectedBook(book);
+                  handleClick(book.id);
+                }}
                 style={{
-                  margin: 20,
+                  margin: isSmallScreen
+                    ? selectedBook && selectedBook.id === book.id
+                      ? "3rem 1.5rem"
+                      : "1rem"
+                    : "3rem",
+                  marginBottom: isSmallScreen ? "3rem" : "5rem",
                   borderRadius: "15px",
-                  paddingTop: "15px",
+                  padding:
+                    selectedBook && selectedBook.id === book.id ? "15px" : "",
+                  boxShadow:
+                    "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
                 }}
               >
-                <Link
+                <div
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "2px",
+                    borderRadius: "15px 15px 0 0",
+                    overflow: "hidden",
                   }}
-                  component={motion.a}
-                  layout="position"
-                  to={`#`}
-                  className={classes.link}
                 >
                   <motion.img
                     layout="position"
@@ -137,39 +172,48 @@ const Books = ({ bookStoreData, query }) => {
                     alt={book.volumeInfo.title}
                     className={classes.image}
                     style={{
-                      width: "70%",
-                      height: "300px",
-                      objectFit: "cover",
-                      marginBottom: "1rem",
-                      borderRadius: "5%",
+                      width: "100%",
+                      aspectRatio: 3 / 3,
+                      objectFit:
+                        selectedBook && selectedBook.id === book.id
+                          ? "contain"
+                          : "cover",
+                      height: "auto",
+                      minHeight: isSmallScreen ? "150px" : "280px",
+                      marginBottom: isSmallScreen ? "0" : "1rem",
                       maxWidth:
                         selectedBook && selectedBook.id === book.id
-                          ? "208px"
+                          ? "300px"
                           : "none",
                     }}
                   />
-                  <Typography
-                    component={motion.p}
-                    layout="position"
-                    variant="h6"
-                    className={classes.bookTitle}
-                  >
-                    {book.volumeInfo.title}
-                  </Typography>
-                  <Typography
-                    component={motion.p}
-                    layout="position"
-                    variant="subtitle1"
-                    className={classes.bookAuthor}
-                  >
-                    {book.volumeInfo.authors?.join(", ")}
-                  </Typography>
-                </Link>
+                </div>
+                <Typography
+                  component={motion.p}
+                  layout="position"
+                  variant="h6"
+                  className={classes.bookTitle}
+                  style={{ marginTop: isSmallScreen ? "0.8rem" : "0" }}
+                >
+                  {book.volumeInfo.title}
+                </Typography>
+                <Typography
+                  component={motion.p}
+                  layout="position"
+                  variant="subtitle1"
+                  className={classes.bookAuthor}
+                >
+                  {book.volumeInfo.authors?.join(", ")}
+                </Typography>
 
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                   {selectedBook && selectedBook.id === book.id && (
                     <Box
-                      style={{ marginBottom: "30px" ,textAlign:'start',padding:'15px'}}
+                      style={{
+                        marginBottom: "30px",
+                        textAlign: "start",
+                        padding: "15px",
+                      }}
                       component={motion.div}
                       initial={{ opacity: 0, y: -30 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -188,7 +232,10 @@ const Books = ({ bookStoreData, query }) => {
                         <b>Page Count: </b>
                         {selectedBook.volumeInfo.pageCount || "Not Available"}
                       </Typography>
-                      <Typography variant="subtitle1" style={{wordBreak:'break-all'}}>
+                      <Typography
+                        variant="subtitle1"
+                        style={{ wordBreak: "break-all" }}
+                      >
                         <b>Preview: </b>
                         <a
                           href={selectedBook.volumeInfo.previewLink}

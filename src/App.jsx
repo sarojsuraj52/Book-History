@@ -23,6 +23,7 @@ function App() {
           <Route path="/auth" element={<Signin />} />
           <Route path="/bookList" element={<BookList />} />
           <Route path="/bookStore" element={<BookStore />} />
+          <Route path="/bookStore/:id" element={<BookStore />} />
         </Routes>
       </AnimatePresence>
       <Footer />

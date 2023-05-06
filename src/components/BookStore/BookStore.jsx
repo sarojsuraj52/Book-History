@@ -5,9 +5,11 @@ import SearchBar from "./SearchBar";
 import { getStoreBooks } from "../../store/bookStoreSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Books from "./Books";
-import { bookStoreActions } from "../../store/bookStoreSlice";
+import './BookStore.css'
 
-const BookStore = () => {
+const BookStore = (props) => {
+  // console.log(data);
+  
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const bookStoreData = useSelector((state) => state.bookStore.books) || [];

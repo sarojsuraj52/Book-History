@@ -18,11 +18,14 @@ const bookSlice = createSlice({
     error: null,
   },
   reducers: {
+    searchBookOnStore(state, action) {
+      state.searchBookOnStore = action.payload;
+    },
     search(state, action) {
       state.booksArray = state.booksArray.filter((book) => {
         const bookValues = Object.values(book[1]);
         return bookValues.some((value) =>
-          String(value).toLowerCase().includes(action.payload.toLowerCase())
+           String(value)?.toLowerCase().includes(action.payload?.toLowerCase())
         );
       });
     },
@@ -53,19 +56,19 @@ const bookSlice = createSlice({
     filterRead(state, action) {
       state.booksArray = state.recoverBooksArray;
       state.booksArray = state.booksArray.filter(
-        (book) => book[1].readingStatus === "read"
+        (book) => book[1].readingStatus === "Read"
       );
     },
     filterUnRead(state, action) {
       state.booksArray = state.recoverBooksArray;
       state.booksArray = state.booksArray.filter(
-        (book) => book[1].readingStatus === "unread"
+        (book) => book[1].readingStatus === "Unread"
       );
     },
     filterReading(state, action) {
       state.booksArray = state.recoverBooksArray;
       state.booksArray = state.booksArray.filter(
-        (book) => book[1].readingStatus === "reading"
+        (book) => book[1].readingStatus === "Reading"
       );
     },
     clearFilter(state, action) {
@@ -140,18 +143,22 @@ export const {
   selectors: postSelectors,
 } = POSTSlice;
 
-
-export const editBook = createAsyncThunk("mySlice/editBook", async ({data,id}) => {
-  const response = await fetch(`https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`, {
-    method:'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-    
-  });
-  return await response.json();
-});
+export const editBook = createAsyncThunk(
+  "mySlice/editBook",
+  async ({ data, id }) => {
+    const response = await fetch(
+      `https://bookshistoryapp-default-rtdb.firebaseio.com/books/${id}.json`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return await response.json();
+  }
+);
 
 const PUTSlice = createSlice({
   name: "PUTSLICE",
@@ -161,30 +168,28 @@ const PUTSlice = createSlice({
     error: null,
   },
   reducers: {},
-  extraReducers: (builder)=> {
+  extraReducers: (builder) => {
     builder
-    .addCase(editBook.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(editBook.fulfilled, (state, action) => {
-      state.data = action.payload;
-      state.loading = false;
-      state.error = null;
-    })
-    .addCase(editBook.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    })
+      .addCase(editBook.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editBook.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(editBook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
-
 
 export const {
   actions: putActions,
   reducer: putReducer,
   selectors: putSelectors,
 } = PUTSlice;
-
 
 export const deleteBook = createAsyncThunk("mySlice/DeleteBook", async (id) => {
   const response = await fetch(
@@ -226,7 +231,6 @@ const DELETESlice = createSlice({
       });
   },
 });
-
 
 export const {
   actions: deleteActions,

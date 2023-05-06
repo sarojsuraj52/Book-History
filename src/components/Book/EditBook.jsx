@@ -27,11 +27,12 @@ const EditBook = ({ bookData }) => {
   return (
     <>
       <Button
+      variant="outlined"
         component={motion.div}
         whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
         whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
         onClick={handleEdit}
-        sx={{ mr: 1 }}
+        sx={{ mr: 2.5 }}
       >
         <EditIcon /> &nbsp; <span>Edit</span>
       </Button>

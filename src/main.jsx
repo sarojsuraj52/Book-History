@@ -9,12 +9,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./components/Dashboard/theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </ThemeProvider>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

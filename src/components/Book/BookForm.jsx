@@ -91,7 +91,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
     readingStatus: yup
       .string()
       .required("Reading status is required")
-      .oneOf(["unread", "reading", "read"], "Invalid reading status"),
+      .oneOf(["Unread", "Reading", "Read"], "Invalid reading status"),
     source: yup
       .string()
       .required("Please select a source")
@@ -123,6 +123,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
         author: "",
         publisher: "",
         genre: "",
+        preview:"",
         publicationDate: "",
         pages: "",
         readingStatus: "",
@@ -219,6 +220,15 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
             </FormHelperText>
           </FormControl>
           <TextField
+            name="preview"
+            sx={{ mb: 2.5 }}
+            fullWidth
+            label="Preview Link (Optional)"
+            value={values.preview}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <TextField
             name="publicationDate"
             sx={{ mb: 2.5 }}
             fullWidth
@@ -268,9 +278,9 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
               onBlur={handleBlur}
               error={errors.readingStatus ? true : false}
             >
-              <MenuItem value="unread">Unread</MenuItem>
-              <MenuItem value="reading">Currently Reading</MenuItem>
-              <MenuItem value="read">Read</MenuItem>
+              <MenuItem value="Unread">Unread</MenuItem>
+              <MenuItem value="Reading">Currently Reading</MenuItem>
+              <MenuItem value="Read">Read</MenuItem>
             </Select>
             <FormHelperText error={errors.readingStatus ? true : false}>
               {errors.readingStatus && touched.readingStatus
