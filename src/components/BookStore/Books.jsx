@@ -208,7 +208,7 @@ const Books = ({ bookStoreData }) => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -30 }}
                     >
-                      <Typography variant="subtitle1">
+                      <Typography variant="subtitle1" >
                         <b>Description : </b>
                         {selectedBook.volumeInfo.description || "Not Available"}
                       </Typography>
