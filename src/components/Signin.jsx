@@ -1,13 +1,16 @@
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
   Button,
   Container,
   CssBaseline,
+  FormHelperText,
   Grid,
   Link,
   TextField,
   Typography,
+  FormControl,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
@@ -17,6 +20,7 @@ import { authActions } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Footer from "./layout/Footer";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import "./Signin.css";
 
 const cred = {
   email: "suraj@gmail.com",
@@ -38,7 +42,7 @@ const Signin = () => {
     email: yup
       .string()
       .email("Invalid email address")
-      .matches(/\.com$/, "email must contain .com"),
+      .matches(/\.com$/, "email must contain .com").required(),
     password: yup
       .string()
       .required()
@@ -70,60 +74,70 @@ const Signin = () => {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Box id="clouds">
       <CssBaseline />
+      <div className="cloud x1"></div>
+      <div className="cloud x2"></div>
+      <div className="cloud x3"></div>
+      <div className="cloud x4"></div>
+      <div className="cloud x5"></div>
       <Box
         sx={{
-          marginTop: 8,
+          margin: "auto",
+          marginTop: '-15%',
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          maxWidth: "450px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            value={values.email}
-            onChange={handleChange}
-            fullWidth
-            label="Email"
-            name="email"
-            autoComplete="email"
-            onBlur={handleBlur}
-            color={errors.email && touched.email ? "warning" : ""}
-            helperText={errors.email && touched.email ? errors.email : ""}
-            error={errors.email && touched.email}
-          />
-
-          <TextField
-            margin="normal"
-            value={values.password}
-            onChange={handleChange}
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onBlur={handleBlur}
-            autoComplete="password"
-            color={errors.password ? "warning" : ""}
-            helperText={
-              errors.password && touched.password ? errors.password : ""
-            }
-            error={errors.password && touched.password}
-          />
-
+          {/* <FormControl fullWidth sx={{ mb: 2.5 }}> */}
+            <TextField
+              margin="normal"
+              value={values.email}
+              onChange={handleChange}
+              fullWidth
+              label="Email"
+              name="email"
+              autoComplete="email"
+              onBlur={handleBlur}
+              color={errors.email ? "warning" : ""}
+              helperText={errors.email && touched.email ? errors.email : ""}
+              error={errors.email && touched.email}
+            />
+          {/* </FormControl> */}
+          {/* <FormControl fullWidth sx={{ mb: 2.5 }}> */}
+            <TextField
+              margin="normal"
+              value={values.password}
+              onChange={handleChange}
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onBlur={handleBlur}
+              autoComplete="password"
+              color={errors.password ? "warning" : ""}
+              helperText={
+                errors.password && touched.password ? errors.password : ""
+              }
+              error={errors.password && touched.password}
+            />
+          {/* </FormControl> */}
           <Button
             component={motion.button}
             whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
             whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
             type="submit"
+            size='large'
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
@@ -145,7 +159,10 @@ const Signin = () => {
         </Box>
       </Box>
       <Footer />
-    </Container>
+
+      {/* <div id="clouds"> */}
+      {/* </div> */}
+    </Box>
   );
 };
 

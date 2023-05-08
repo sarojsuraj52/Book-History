@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import SortIcon from '@mui/icons-material/Sort';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useDispatch, useSelector } from "react-redux";
 import { bookActions } from "../../../store/bookSlice";
@@ -51,7 +52,7 @@ function Sort() {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <MenuIcon />
+        <SortIcon />
       </IconButton>
       <Menu
         id="simple-menu"

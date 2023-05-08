@@ -16,6 +16,7 @@ import {
   Typography,
   Tooltip,
 } from "@mui/material";
+import { forwardRef } from "react";
 import { makeStyles } from "@mui/styles";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -44,14 +45,11 @@ function EnhancedTableToolbar() {
       <Typography variant="h5" style={{ whiteSpace: "noWrap" }}>
         Book List
       </Typography>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex" , justifyContent:'center',alignItems:'center'}}>
         <SearchBar />
-        <Tooltip title="Sort List">
-          <Sort />
-        </Tooltip>
-        <Tooltip title="Sort List">
-          <Filter />
-        </Tooltip>
+        <Sort />
+        {/* <br /> */}
+        <Filter />
       </Box>
     </Toolbar>
   );

@@ -107,7 +107,6 @@ const Books = ({ bookStoreData }) => {
       ) : (
         <>
           <Grid
-          // component={motion.span}
             container
             style={{
               display: "flex",
@@ -126,7 +125,7 @@ const Books = ({ bookStoreData }) => {
                 exit={{ opacity: 0, y: 50 }}
                 transition={{
                   delay: index * 0.1,
-                  layout: { duration: 0.7, type: "spring", damping: 17 },
+                  layout: { duration: 1, type: "spring", damping: 17 },
                 }}
                 layout={true}
                 item
@@ -147,6 +146,7 @@ const Books = ({ bookStoreData }) => {
                   boxShadow:
                     "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
                 }}
+          
               >
                 <div
                   style={{

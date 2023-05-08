@@ -15,9 +15,17 @@ const BookStore = lazy(() => import("./components/BookStore/BookStore"));
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname == "/bookList") {
+      document.body.style.overflow = 'hidden'
+    }
+  }, [location.pathname]);
+
   return (
     <div className="App">
       {location.pathname !== "/auth" && <Navbar />}
+
       <AnimatePresence>
         <Suspense
           fallback={
