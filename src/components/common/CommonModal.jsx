@@ -41,10 +41,11 @@ export default function CommonModal({ onClose, open, children }) {
           animate={{
             scale: 1,
             opacity: 1,
-            transition: {  type: "spring",damping:17,stiffness:150 },
+            // transition: { type: "spring",damping:17,stiffness:150 },
           }}
-          exit={{ scale: 0.3, opacity: 0, transition: { duration: 0.3 } }}
-          layout
+          exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
+          layout='position'
+          transition={{duration:0.65,type: "spring"}}
         >
           <Box sx={style}>{children}</Box>
         </motion.span>

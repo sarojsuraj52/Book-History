@@ -120,13 +120,14 @@ function Navbar() {
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
             {"SURAJ SAROJ"}
           </Typography>
-          <Tooltip className="okokokok" >
+          <Tooltip className="okokokok">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt={userEmail || "user"} src="/" />
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px", width: "100% !important" }}
+            sx={{ mt: "45px",
+          }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{

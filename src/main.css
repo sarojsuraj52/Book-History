@@ -1,17 +1,11 @@
-  div,p {
-    transition: all 0.5s ease 0.1s;
-}
-
-*,
-body {
+* {
   margin: 0;
   padding: 0;
-  /* overflow: hidden; */
+  box-sizing: border-box;
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: gray lightgray;
+div {
+  transition: all 0.6s;
 }
 
 *::-webkit-scrollbar {

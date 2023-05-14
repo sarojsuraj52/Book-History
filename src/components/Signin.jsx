@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
   FormControl,
+  useMediaQuery,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
@@ -31,6 +32,20 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isSmallScreen = useMediaQuery("(max-width: 720px)");
+  
+
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = './Signin.css';
+    link.rel = 'stylesheet';
+
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -42,7 +57,8 @@ const Signin = () => {
     email: yup
       .string()
       .email("Invalid email address")
-      .matches(/\.com$/, "email must contain .com").required(),
+      .matches(/\.com$/, "email must contain .com")
+      .required(),
     password: yup
       .string()
       .required()
@@ -69,6 +85,8 @@ const Signin = () => {
         alert("Login Successfull");
         navigate("/");
         action.resetForm();
+      }else{
+        alert('username or password is incorrect')
       }
     },
   });
@@ -84,11 +102,17 @@ const Signin = () => {
       <Box
         sx={{
           margin: "auto",
-          marginTop: '-15%',
-          display: "flex",
+          padding: "0 2rem",
           flexDirection: "column",
-          alignItems: "center",
           maxWidth: "450px",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
@@ -99,45 +123,45 @@ const Signin = () => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           {/* <FormControl fullWidth sx={{ mb: 2.5 }}> */}
-            <TextField
-              margin="normal"
-              value={values.email}
-              onChange={handleChange}
-              fullWidth
-              label="Email"
-              name="email"
-              autoComplete="email"
-              onBlur={handleBlur}
-              color={errors.email ? "warning" : ""}
-              helperText={errors.email && touched.email ? errors.email : ""}
-              error={errors.email && touched.email}
-            />
+          <TextField
+            margin="normal"
+            value={values.email}
+            onChange={handleChange}
+            fullWidth
+            label="Email"
+            name="email"
+            autoComplete="email"
+            onBlur={handleBlur}
+            color={errors.email ? "warning" : ""}
+            helperText={errors.email && touched.email ? errors.email : ""}
+            error={errors.email && touched.email}
+          />
           {/* </FormControl> */}
           {/* <FormControl fullWidth sx={{ mb: 2.5 }}> */}
-            <TextField
-              margin="normal"
-              value={values.password}
-              onChange={handleChange}
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onBlur={handleBlur}
-              autoComplete="password"
-              color={errors.password ? "warning" : ""}
-              helperText={
-                errors.password && touched.password ? errors.password : ""
-              }
-              error={errors.password && touched.password}
-            />
+          <TextField
+            margin="normal"
+            value={values.password }
+            onChange={handleChange}
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            onBlur={handleBlur}
+            autoComplete="password"
+            color={errors.password ? "warning" : ""}
+            helperText={
+              errors.password && touched.password ? errors.password : ""
+            }
+            error={errors.password && touched.password}
+          />
           {/* </FormControl> */}
           <Button
             component={motion.button}
             whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
             whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
             type="submit"
-            size='large'
+            size="large"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}

@@ -41,6 +41,7 @@ const BookList = () => {
           alignItems: "center",
           mt: 5,
           p: 1,
+          overflow:'hidden'
         }}
       >
         <BookTable bookData={booksArray} />

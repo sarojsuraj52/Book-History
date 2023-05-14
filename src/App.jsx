@@ -1,10 +1,9 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence ,motion} from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import "./App.css";
 import { CircularProgress } from "@mui/material";
 
 const Signin = lazy(() => import("./components/Signin"));
@@ -18,12 +17,12 @@ function App() {
 
   useEffect(() => {
     if (location.pathname == "/bookList") {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden !important";
     }
   }, [location.pathname]);
 
   return (
-    <div className="App">
+    <>
       {location.pathname !== "/auth" && <Navbar />}
 
       <AnimatePresence>
@@ -64,7 +63,7 @@ function App() {
         </Suspense>
       </AnimatePresence>
       <Footer />
-    </div>
+    </>
   );
 }
 

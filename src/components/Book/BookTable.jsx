@@ -32,7 +32,7 @@ import Sort from "./utilities/Sort";
 import Filter from "./utilities/Filter";
 
 function EnhancedTableToolbar() {
-  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const isSmallScreen = useMediaQuery("(max-width: 720px)");
 
   return (
     <Toolbar
@@ -45,7 +45,9 @@ function EnhancedTableToolbar() {
       <Typography variant="h5" style={{ whiteSpace: "noWrap" }}>
         Book List
       </Typography>
-      <Box sx={{ display: "flex" , justifyContent:'center',alignItems:'center'}}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
         <SearchBar />
         <Sort />
         {/* <br /> */}
@@ -63,6 +65,7 @@ const useStyles = makeStyles({
 });
 
 function BookTable({ bookData }) {
+  const isSmallScreen = useMediaQuery("(max-width: 720px)");
   if (!bookData) {
     return null;
   }
@@ -102,16 +105,29 @@ function BookTable({ bookData }) {
   }, [books]);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ delay:0.2, duration: 0.3 }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <TableContainer
         sx={{
           padding: "25px",
-          width: "85%",
+          marginTop: "1rem",
+          width: isSmallScreen ? "95%" : "70%",
           overflow: "auto",
           boxShadow:
             "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 5px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
         }}
-        component={Paper}
+        component={motion.div}
       >
         <EnhancedTableToolbar />
         <Table>
@@ -267,7 +283,7 @@ function BookTable({ bookData }) {
             })}
           </TableBody>
         </Table>
-        <AnimatePresence>
+        <AnimatePresence >
           {Boolean(selectedBook) && (
             <ViewBook
               book={selectedBook}
@@ -297,7 +313,7 @@ function BookTable({ bookData }) {
         message={errorDELETE ? errorDELETE : "Book deleted successfully"}
         severity={errorDELETE ? "warning" : "success"}
       />
-    </>
+    </motion.div>
   );
 }
 

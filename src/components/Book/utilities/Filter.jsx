@@ -58,7 +58,7 @@ function Filter() {
         </MenuItem>
         <MenuItem onClick={handleReadingFilter}>
           <PlayLessonIcon color="info" />
-          <span>&nbsp; Unread</span>
+          <span>&nbsp; Reading</span>
         </MenuItem>
         <MenuItem onClick={handleClearFilter}>
           <HighlightOffIcon color="error" />

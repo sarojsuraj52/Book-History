@@ -10,9 +10,9 @@ import noImage from "../../assets/noImage.png";
 import "./Book.css";
 
 const Books = ({ bookStoreData }) => {
+  const [selectedBook, setSelectedBook] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width: 720px)");
   const isMediumScreen = useMediaQuery("(max-width: 960px)");
-  const isMediumUpperScreen = useMediaQuery("(max-width: 1200px)");
 
   const handleBookClick = (book) => {
     setSelectedBook(book);
@@ -78,7 +78,6 @@ const Books = ({ bookStoreData }) => {
   const [page, setPage] = useState(1);
   const booksPerPage = 10;
   const numPages = Math.ceil(bookStoreData?.length / booksPerPage) || 0;
-  const [selectedBook, setSelectedBook] = useState(null);
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -125,9 +124,9 @@ const Books = ({ bookStoreData }) => {
                 exit={{ opacity: 0, y: 50 }}
                 transition={{
                   delay: index * 0.1,
-                  layout: { duration: 1, type: "spring", damping: 17 },
+                  layout: {  type: "spring", damping: 17 },
                 }}
-                layout={true}
+                layout='position'
                 item
                 xs={selectedBook && selectedBook.id === book.id ? 12 : 4}
                 sm={selectedBook && selectedBook.id === book.id ? 12 : 4}
@@ -145,13 +144,21 @@ const Books = ({ bookStoreData }) => {
                     selectedBook && selectedBook.id === book.id ? "15px" : "",
                   boxShadow:
                     "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 4px 20px 0px rgba(0,0,0,0.12)",
+                  maxHeight: isSmallScreen ? "600px" : "none",
+                  overflow: "auto",
+                  backgroundColor:
+                    selectedBook && selectedBook.id === book.id
+                      ? "#36454F"
+                      : "white",
+                  color:
+                    selectedBook && selectedBook.id === book.id
+                      ? "white"
+                      : "black",
                 }}
-          
               >
                 <div
                   style={{
                     borderRadius: "15px 15px 0 0",
-                    overflow: "hidden",
                   }}
                 >
                   <motion.img
@@ -190,6 +197,12 @@ const Books = ({ bookStoreData }) => {
                   layout="position"
                   variant="subtitle1"
                   className={classes.bookAuthor}
+                  style={{
+                    color:
+                      selectedBook && selectedBook.id === book.id
+                        ? "white"
+                        : "grey",
+                  }}
                 >
                   {book.volumeInfo.authors?.join(", ")}
                 </Typography>
@@ -208,7 +221,7 @@ const Books = ({ bookStoreData }) => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -30 }}
                     >
-                      <Typography variant="subtitle1" >
+                      <Typography variant="subtitle1">
                         <b>Description : </b>
                         {selectedBook.volumeInfo.description || "Not Available"}
                       </Typography>
@@ -227,6 +240,12 @@ const Books = ({ bookStoreData }) => {
                       >
                         <b>Preview: </b>
                         <a
+                          style={{
+                            color:
+                              selectedBook && selectedBook.id === book.id
+                                ? "white"
+                                : "inherit",
+                          }}
                           href={selectedBook.volumeInfo.previewLink}
                           target="_blank"
                           rel="noopener noreferrer"

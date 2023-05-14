@@ -1,13 +1,12 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect,useCallback } from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
-import { useCallback, Fragment } from "react";
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
 import Video from "../../assets/book.mp4";
 import BookIcon from "@mui/icons-material/Book";
 import { motion, AnimatePresence } from "framer-motion";
 import BookForm from "../Book/BookForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import SnackBar from "../common/SnackBar";
 import { useMediaQuery } from "@material-ui/core";
 
@@ -33,19 +32,19 @@ const Dashboard = () => {
     await console.log();
   }, []);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+  // useLayoutEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   return (
     <Box

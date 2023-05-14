@@ -15,7 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const AnimatedDiv = () => {
   return (
     <div className="animated-div-container">
-      <ul className="circles">
+      <ul className="cubes">
         <li></li>
         <li></li>
         <li></li>
@@ -60,7 +60,6 @@ const Sidebar = ({ open, onOpen, onClose }) => {
           }}
           transition={{ type: "spring", damping: 13, stiffness: 160 }}
           style={{
-            // width: 270 ,
             minWidth: isSmallScreen ? 230 : 250,
           }}
           role="presentation"
@@ -69,7 +68,6 @@ const Sidebar = ({ open, onOpen, onClose }) => {
           <span
             style={{
               borderBottom: "1px solid lightgrey",
-              backgroundColor: "white",
             }}
           >
             <Typography

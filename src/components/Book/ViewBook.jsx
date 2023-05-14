@@ -105,8 +105,6 @@ const ViewBook = ({ book, onClose, open }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          pr: 1.5,
-          pb: 1.5,
           marginTop: "2rem",
         }}
       >
