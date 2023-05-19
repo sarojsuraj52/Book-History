@@ -5,17 +5,16 @@ import SearchBar from "./SearchBar";
 import { getStoreBooks } from "../../store/bookStoreSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Books from "./Books";
-import './BookStore.css'
+import "./BookStore.css";
 
 const BookStore = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const bookStoreData = useSelector((state) => state.bookStore.books);
 
-  const handleSearch = React.useCallback((data) => {
+  const handleSearch = (data) => {
     setQuery(data);
-  }, []);
-  
+  };
 
   useEffect(() => {
     dispatch(getStoreBooks(query));
@@ -31,7 +30,7 @@ const BookStore = () => {
       sx={{ width: "100%" }}
     >
       <SearchBar search={handleSearch} />
-      <Books bookStoreData={bookStoreData}  />
+      <Books bookStoreData={bookStoreData} search={query} />
     </Box>
   );
 };

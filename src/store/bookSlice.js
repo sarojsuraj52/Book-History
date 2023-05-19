@@ -6,6 +6,7 @@ export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
     "https://bookshistoryapp-default-rtdb.firebaseio.com/books.json"
   );
   const data = response.data;
+  // console.log(Object.entries(data))
   return Object.entries(data);
 });
 
@@ -23,12 +24,18 @@ const bookSlice = createSlice({
     },
     search: (state, action) => {
       const query = action.payload.toLowerCase();
-      state.booksArray = state.booksArray.filter((book) => {
-        const bookValues = Object.values(book[1]);
-        return bookValues.some((value) =>
-          String(value).toLowerCase().includes(query)
-        );
+      const data = state.booksArray.filter((item) => {
+        const book = item[1];
+        return book.title.toLowerCase().includes(query);
       });
+      console.log(data)
+
+      // state.booksArray = state.booksArray.filter((book) => {
+      //   const bookValues = Object.values(book[1]);
+      //   return bookValues.some((value) =>
+      //     String(value).toLowerCase().includes(query)
+      //   );
+      // });
     },
     sortByTitle(state, action) {
       state.booksArray = state.recoverBooksArray;
@@ -121,7 +128,7 @@ const POSTSlice = createSlice({
         state.loading = true;
       })
       .addCase(addBook.fulfilled, (state, action) => {
-        state.data = action.payload.id;
+        state.data = action.payload;
         state.loading = false;
         state.error = null;
       })

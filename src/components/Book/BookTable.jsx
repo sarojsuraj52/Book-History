@@ -107,9 +107,9 @@ function BookTable({ bookData }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={{ opacity: 1, scale: 1}}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ delay:0.2, duration: 0.3 }}
+      transition={{ delay:0.4, duration: 0.3}}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -221,7 +221,7 @@ function BookTable({ bookData }) {
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {book[1].pages}
+                      {book[1].pages || ' '}
                     </TableCell>
                     <TableCell
                       component={motion.td}

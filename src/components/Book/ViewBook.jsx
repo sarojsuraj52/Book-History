@@ -12,6 +12,7 @@ const ViewBook = ({ book, onClose, open }) => {
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const [variant, setVariant] = useState("outlined");
 
+  console.log(book)
   const useStyles = makeStyles((theme) => ({
     badge: {
       fontSize: isSmallScreen ? 4 : 8.5, // Change the font size as per your requirements
@@ -45,36 +46,36 @@ const ViewBook = ({ book, onClose, open }) => {
         <Typography component="h2" variant="h5" className={classes.title}>
           {book[1].title}
         </Typography>
-        <Typography className={classes.subtitle}>{book.author}</Typography>
+        <Typography className={classes.subtitle}>{book[1].author || 'Not Available'}</Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Publisher:</span>
-          {book[1].publisher}
+          {book[1].publisher || 'Not Available'}
         </Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Genre:</span>
-          {book[1].genre}
+          {book[1].genre || 'Not Available'}
         </Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Publication Date:</span>
-          {new Date(book[1].publicationDate).toLocaleDateString()}
+          {new Date(book[1].publicationDate).toLocaleDateString() || 'Not Available'}
         </Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Pages:</span>
-          {book[1].pages}
+          {book[1].pages || 'Not Available'}
         </Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Reading Status:</span>
-          {book[1].readingStatus}
+          {book[1].readingStatus || 'Not Available'}
         </Typography>
         {book[1].readingStatus === "reading" && (
           <React.Fragment>
             <Typography className={classes.value}>
               <span className={classes.label}>Current Page:</span>
-              {book[1].currentPage}
+              {book[1].currentPage || 'Not Available'}
             </Typography>
             <Typography className={classes.value}>
               <span className={classes.label}>Start Date:</span>
-              {new Date(book[1].startDate).toLocaleDateString()}
+              {new Date(book[1].startDate).toLocaleDateString() || 'Not Available'}
             </Typography>
           </React.Fragment>
         )}
@@ -82,7 +83,7 @@ const ViewBook = ({ book, onClose, open }) => {
           <React.Fragment>
             <Typography className={classes.value}>
               <span className={classes.label}>Start Date:</span>
-              {new Date(book[1].startDate).toLocaleDateString()}
+              {new Date(book[1].startDate).toLocaleDateString() || 'Not Available'}
             </Typography>
             <Typography className={classes.value}>
               <span className={classes.label}>End Date:</span>
@@ -92,7 +93,7 @@ const ViewBook = ({ book, onClose, open }) => {
         )}
         <Typography className={classes.value}>
           <span className={classes.label}>Source:</span>
-          {book[1].source}
+          {book[1].source || 'Not Available'}
         </Typography>
         <Typography className={classes.value}>
           <span className={classes.label}>Preview Link:</span>

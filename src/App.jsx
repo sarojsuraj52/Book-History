@@ -1,7 +1,7 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AnimatePresence ,motion} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { CircularProgress } from "@mui/material";

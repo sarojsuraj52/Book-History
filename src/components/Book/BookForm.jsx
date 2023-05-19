@@ -96,7 +96,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
     source: yup
       .string()
       .required("Please select a source")
-      .oneOf(["Purchased", "Borrowed", "Rented"], "Invalid source"),
+      .oneOf(["Purchased", "Borrowed", "Rented","Google Books"], "Invalid source"),
     startDate: yup.date(),
     endDate: yup.date(),
   });
@@ -354,6 +354,11 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
                   value="Rented"
                   control={<Radio />}
                   label="Rented"
+                />
+                <FormControlLabel
+                  value="Google Books"
+                  control={<Radio />}
+                  label="Google Books"
                 />
               </RadioGroup>
               <FormHelperText error={errors.source ? true : false}>
