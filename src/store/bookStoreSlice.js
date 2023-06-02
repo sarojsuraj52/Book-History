@@ -22,8 +22,7 @@ const bookStoreSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getStoreBooks.pending, (state) => {
@@ -45,3 +44,82 @@ export const {
   reducer: bookStoreReducer,
   selectors: bookStoreSelectors,
 } = bookStoreSlice;
+
+export const getCart = createAsyncThunk("books/cart", async () => {
+  const response = await axios.get(
+    `https://bookshistoryapp-default-rtdb.firebaseio.com/cart.json`
+  );
+  return Object.entries(response.data);
+});
+
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    cart: [],
+    status: "idle",
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCart.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getCart.fulfilled, (state, action) => {
+        state.status = "success";
+        state.cart = action.payload;
+      })
+      .addCase(getCart.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
+
+
+export const {
+  actions: cartActions,
+  reducer: cartReducer,
+  selectors: cartSelectors,
+} = cartSlice;
+
+
+export const addToCart = createAsyncThunk("books/addtocart", async (data) => {
+  const response = await axios.post(
+    "https://bookshistoryapp-default-rtdb.firebaseio.com/cart.json",
+    data
+  );
+  return response.data;
+});
+
+const addToCartSlice = createSlice({
+  name: "addToCartSLICE",
+  initialState: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addToCart.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export const {
+  actions: addToCartActions,
+  reducer: addToCartReducer,
+  selectors: addToCartSelectors,
+} = addToCartSlice;

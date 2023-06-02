@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -21,6 +21,8 @@ import { authActions } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import Footer from "./layout/Footer";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { AnimatePresence } from "framer-motion";
+import Toast from "./common/Toast";
 import "./Signin.css";
 
 const cred = {
@@ -32,13 +34,12 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const isSmallScreen = useMediaQuery("(max-width: 720px)");
-  
+  const [userMatched, setUserMatched] = useState(null);
 
   useEffect(() => {
-    const link = document.createElement('link');
-    link.href = './Signin.css';
-    link.rel = 'stylesheet';
+    const link = document.createElement("link");
+    link.href = "./Signin.css";
+    link.rel = "stylesheet";
 
     document.head.appendChild(link);
 
@@ -82,17 +83,29 @@ const Signin = () => {
     onSubmit: (values, action) => {
       if (JSON.stringify(cred) == JSON.stringify(values)) {
         dispatch(authActions.login(values.email));
-        alert("Login Successfull");
-        navigate("/");
+        setUserMatched(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 1300)
         action.resetForm();
-      }else{
-        alert('username or password is incorrect')
+      } else {
+        setUserMatched(false);
       }
     },
   });
 
   return (
     <Box id="clouds">
+      <AnimatePresence>
+        {userMatched != null && (
+          <Toast
+            severity={userMatched ? "success" : "error"}
+            message={
+              userMatched ? "Login Successfull" : "Inavlid Username or Password"
+            }
+          />
+        )}
+      </AnimatePresence>
       <CssBaseline />
       <div className="cloud x1"></div>
       <div className="cloud x2"></div>
@@ -112,7 +125,7 @@ const Signin = () => {
           right: 0,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
@@ -140,7 +153,7 @@ const Signin = () => {
           {/* <FormControl fullWidth sx={{ mb: 2.5 }}> */}
           <TextField
             margin="normal"
-            value={values.password }
+            value={values.password}
             onChange={handleChange}
             fullWidth
             name="password"
@@ -183,7 +196,6 @@ const Signin = () => {
         </Box>
       </Box>
       <Footer />
-
       {/* <div id="clouds"> */}
       {/* </div> */}
     </Box>

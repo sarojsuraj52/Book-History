@@ -5,6 +5,9 @@ import { postReducer } from "./bookSlice";
 import { putReducer } from "./bookSlice";
 import { deleteReducer } from "./bookSlice";
 import { bookStoreReducer } from "./bookStoreSlice";
+import { cartReducer } from "./bookStoreSlice";
+import { addToCartReducer } from "./bookStoreSlice";
+import { commonReducer } from "./commonSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +16,9 @@ const rootReducer = combineReducers({
   put: putReducer,
   delete: deleteReducer,
   bookStore: bookStoreReducer,
+  cart: cartReducer,
+  postCart: addToCartReducer,
+  common: commonReducer
 });
 
 export default rootReducer;

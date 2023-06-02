@@ -5,15 +5,18 @@ import { Pagination, PaginationItem, Button } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import noImage from "../../assets/noImage.png";
 import { addBook } from "../../store/bookSlice";
 import { useDispatch } from "react-redux";
 import SnackBar from "../common/SnackBar";
 import { fetchBooks } from "../../store/bookSlice";
+import { addToCart } from "../../store/bookStoreSlice";
 import "./Book.css";
 
 const Books = ({ bookStoreData, search }) => {
+  const navigate = useNavigate();
   const [selectedBook, setSelectedBook] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width: 720px)");
   const isMediumScreen = useMediaQuery("(max-width: 960px)");
@@ -131,6 +134,23 @@ const Books = ({ bookStoreData, search }) => {
     setSnackbarOpen(true);
   };
 
+  const handleAddToCart = (book) => {
+    const {
+      title,
+      imageLinks,
+      pageCount,
+    } = book.volumeInfo;
+
+    const cartItemToPost = {
+      title,
+      imageLinks,
+      price:pageCount,
+      quantity:1
+    }
+    console.log(cartItemToPost)
+    dispatch(addToCart(cartItemToPost))
+  };
+
   const isBookInBookList = booksArray.some(([_, book]) => {
     return (
       book?.title === selectedBook?.volumeInfo.title &&
@@ -151,7 +171,6 @@ const Books = ({ bookStoreData, search }) => {
       groupedBooks[genre] = [book];
     }
   });
-
 
   return (
     <div className={classes.root}>
@@ -183,10 +202,29 @@ const Books = ({ bookStoreData, search }) => {
           >
             {Object.entries(groupedBooks).map(([genre, books]) => (
               <Grid item xs={12} key={genre}>
-                <Typography variant="h4" style={{ marginBottom: "1rem" }}>
+                <Typography
+                  component={motion.p}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 50 }}
+                  transition={{
+                    layout: { type: "spring", damping: 17 },
+                  }}
+                  layout="position"
+                  variant={isSmallScreen ? "h6" : "h5"}
+                  style={{ marginBottom: "1rem" }}
+                >
                   {genre}
                 </Typography>
-                <Grid container spacing={2}>
+                <Grid
+                  container
+                  spacing={1}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {books?.map((book, index) => (
                     <Grid
                       id={book.id}
@@ -333,34 +371,64 @@ const Books = ({ bookStoreData, search }) => {
                               </a>
                             </Typography>
                             <br />
-                            <Button
-                              id="add-to-list-btn"
-                              disabled={isBookInBookList ? true : false}
-                              variant="contained"
-                              color="primary"
-                              component={motion.button}
-                              whileTap={{ scale: 0.7 }}
-                              whileHover={{
-                                scale: 1.05,
-                              }}
-                              // transition={{ duration: 0.6 }}
-                              onClick={() => handleAddToBookList(book)}
+                            <div
                               style={{
-                                color: "white",
-                                border: isBookInBookList
-                                  ? "1px solid white"
-                                  : "inherit",
-                                cursor: isBookInBookList
-                                  ? "crosshair"
-                                  : "pointer",
-
-                                transition: "all 0.2s",
+                                display: "flex",
+                                justifyContent: "space-evenly",
                               }}
                             >
-                              {isBookInBookList
-                                ? "Already Added"
-                                : "Add To BookList"}
-                            </Button>
+                              <Button
+                                id="add-to-list-btn"
+                                disabled={isBookInBookList ? true : false}
+                                variant="contained"
+                                color="primary"
+                                component={motion.button}
+                                whileTap={{ scale: 0.7 }}
+                                whileHover={{
+                                  scale: 1.05,
+                                }}
+                                // transition={{ duration: 0.6 }}
+                                onClick={() => handleAddToBookList(book)}
+                                style={{
+                                  color: "white",
+                                  border: isBookInBookList
+                                    ? "1px solid white"
+                                    : "inherit",
+                                  cursor: isBookInBookList
+                                    ? "crosshair"
+                                    : "pointer",
+
+                                  transition: "all 0.2s",
+                                }}
+                              >
+                                {isBookInBookList
+                                  ? "Already Added"
+                                  : "Add To BookList"}
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                component={motion.button}
+                                whileTap={{ scale: 0.7 }}
+                                whileHover={{
+                                  scale: 1.05,
+                                }}
+                                onClick={() => handleAddToCart(book)}
+                                style={{
+                                  color: "white",
+                                  border: isBookInBookList
+                                    ? "1px solid white"
+                                    : "inherit",
+                                  cursor: isBookInBookList
+                                    ? "crosshair"
+                                    : "pointer",
+
+                                  transition: "all 0.2s",
+                                }}
+                              >
+                                Add To Cart
+                              </Button>
+                            </div>
                           </Box>
                         )}
                       </AnimatePresence>
@@ -404,6 +472,22 @@ const Books = ({ bookStoreData, search }) => {
         message={errorPost ? errorPost : "Book added successfully"}
         severity={errorPost ? "warning" : "success"}
       />
+      <Button
+        variant="contained"
+        color="primary"
+        component={motion.button}
+        whileTap={{ scale: 0.7, transition: { duration: 0.3 } }}
+        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+        onClick={() => navigate("/bookList")} //navigating to booklist on click
+        sx={{
+          my: isSmallScreen ? 3 : 3,
+          position: "fixed",
+          bottom: "5rem",
+          right: "3rem",
+        }}
+      >
+        Go To LIST ➤
+      </Button>
     </div>
   );
 };

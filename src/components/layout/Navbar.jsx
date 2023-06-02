@@ -13,8 +13,10 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { commonActions } from "../../store/commonSlice";
 import Sidebar from "./Sidebar";
 import { Button } from "@material-ui/core";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 
 const MemoizedSidebar = React.memo(Sidebar);
 
@@ -59,6 +61,10 @@ function Navbar() {
       day: "numeric",
     });
   }, []);
+
+  const handleCartOpen = () => {
+    dispatch(commonActions.toggleCart());
+  };
 
   return (
     <AppBar position="relative" sx={{ zIndex: 1, backgroundColor: "#038aff " }}>
@@ -120,14 +126,22 @@ function Navbar() {
           <Typography sx={{ pr: 2, display: { xs: "none", sm: "flex" } }}>
             {"SURAJ SAROJ"}
           </Typography>
-          <Tooltip className="okokokok">
+          <Typography
+            onClick={handleCartOpen}
+            sx={{
+              pr: 2,
+              display: { xs: "none", sm: "flex", cursor: "pointer" },
+            }}
+          >
+            <ShoppingCartCheckoutIcon />
+          </Typography>
+          <Tooltip>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt={userEmail || "user"} src="/" />
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px",
-          }}
+            sx={{ mt: "45px" }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
@@ -142,13 +156,13 @@ function Navbar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem  onClick={handleCloseUserMenu}>
+            <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
-            <MenuItem  onClick={handleCloseUserMenu}>
+            <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Setting</Typography>
             </MenuItem>
-            <MenuItem  onClick={handleCloseUserMenu}>
+            <MenuItem onClick={handleCloseUserMenu}>
               <Typography onClick={handleLogout}>Logout</Typography>
             </MenuItem>
           </Menu>
