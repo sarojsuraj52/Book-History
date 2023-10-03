@@ -9,32 +9,46 @@ import CloseIcon from "@mui/icons-material/Close";
 function Cart() {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
+  const { total } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(getCart());
   }, []);
 
   const deleteHandler = async (id) => {
-    const confirmRes = window.confirm("Are you Sure?");
-    if (confirmRes === true) {
-      const res = await axios.delete(
-        `https://e-commerce-c0ab2-default-rtdb.firebaseio.com/cart${email}/${id}.json`
-      );
-      if (res.status === 200) {
-        alert("Item removed succesfully");
+    try {
+      console.log(id);
+      const confirmRes = window.confirm("Are you Sure?");
+      if (confirmRes === true) {
+        const res = await fetch(
+          `https://bookshistoryapp-default-rtdb.firebaseio.com/cart/${id}.json`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              // Add any other headers required by your API
+            },
+          }
+        );
+        if (res.status === 200) {
+          dispatch(getCart())
+          alert("Item removed succesfully");
+        } else {
+          alert("Removal cannot complete");
+        }
       } else {
-        alert("Removal cannot complete");
+        alert("Cancelled");
       }
-    } else {
-      alert("Cancelled");
+    } catch (error) {
+      console.error(error);
     }
-    ctx.removeItem();
-    getData();
   };
 
   const handleClose = () => {
     dispatch(commonActions.toggleCart());
   };
+
+
 
   const cartItems = cart?.map((item, index) => (
     <div key={index}>
@@ -111,7 +125,7 @@ function Cart() {
       <div className={classes["cart-items"]}>{cartItems}</div>
       <div className={classes.total}>
         <span className={classes["total-title"]}>Total</span>
-        <span className={classes["total-value"]}>${}</span>
+        <span className={classes["total-value"]}>${total}</span>
       </div>
       <button className={classes["purchase-btn"]}>PURCHASE</button>
     </motion.section>

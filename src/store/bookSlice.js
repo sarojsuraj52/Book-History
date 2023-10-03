@@ -6,7 +6,6 @@ export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
     "https://bookshistoryapp-default-rtdb.firebaseio.com/books.json"
   );
   const data = response.data;
-  // console.log(Object.entries(data))
   return Object.entries(data);
 });
 

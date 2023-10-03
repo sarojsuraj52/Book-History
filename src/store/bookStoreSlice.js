@@ -57,6 +57,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
+    total: 0,
     status: "idle",
     error: null,
   },
@@ -69,6 +70,10 @@ const cartSlice = createSlice({
       .addCase(getCart.fulfilled, (state, action) => {
         state.status = "success";
         state.cart = action.payload;
+        state.total = state.cart.reduce((total, item) => {
+          const price = item[1].price;
+          return total + price;
+          }, 0);
       })
       .addCase(getCart.rejected, (state, action) => {
         state.status = "failed";
@@ -123,3 +128,43 @@ export const {
   reducer: addToCartReducer,
   selectors: addToCartSelectors,
 } = addToCartSlice;
+
+
+export const deleteCartItem = createAsyncThunk("books/deleteCartItem", async (data) => {
+  const response = await axios.post(
+    "https://bookshistoryapp-default-rtdb.firebaseio.com/cart.json",
+    data
+  );
+  return response.data;
+});
+
+const deleteCartItemSlice = createSlice({
+  name: "deleteCartItemSLICE",
+  initialState: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(deleteCartItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteCartItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export const {
+  actions: deleteCartItemActions,
+  reducer: deleteCartItemReducer,
+  selectors: deleteCartItemSelectors,
+} = deleteCartItemSlice;

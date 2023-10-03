@@ -5,7 +5,6 @@ import SearchBar from "./SearchBar";
 import { getStoreBooks } from "../../store/bookStoreSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Books from "./Books";
-import Cart from "../cart/Cart";
 import "./BookStore.css";
 
 const BookStore = () => {

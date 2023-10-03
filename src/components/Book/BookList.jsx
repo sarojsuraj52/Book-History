@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Button } from "@mui/material";
 import BookForm from "./BookForm";
 import BookTable from "./BookTable";
@@ -41,7 +41,7 @@ const BookList = () => {
           alignItems: "center",
           mt: 5,
           p: 1,
-          overflow:'hidden'
+          overflow: "hidden",
         }}
       >
         <BookTable bookData={booksArray} />

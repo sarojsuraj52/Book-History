@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   TextField,
   FormControl,
@@ -96,7 +96,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
     source: yup
       .string()
       .required("Please select a source")
-      .oneOf(["Purchased", "Borrowed", "Rented","Google Books"], "Invalid source"),
+      .oneOf(["Purchased", "Borrowed", "Rented", "Google Books"], "Invalid source"),
     startDate: yup.date(),
     endDate: yup.date(),
   });
@@ -105,12 +105,12 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
     method === "POST"
       ? dispatch(addBook(values))
       : dispatch(editBook({ data: values, id: bookData[0] }));
-  
+
     openSnackbar();
     onClose();
     location.pathname === "/" && navigate("/bookList");
   };
-  
+
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
@@ -119,7 +119,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
         author: "",
         publisher: "",
         genre: "",
-        preview:"",
+        preview: "",
         publicationDate: "",
         pages: "",
         readingStatus: "",
@@ -288,7 +288,7 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
           <Box
             display={
               values.readingStatus === "reading" ||
-              values.readingStatus === "read"
+                values.readingStatus === "read"
                 ? "block"
                 : "none"
             }
@@ -370,13 +370,13 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
             sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
           >
             <Button
-            type="button"
+              type="button"
               variant={variants.variant}
-              onMouseEnter={()=> setVariants(prev=>{
-                return {...prev,variant:'contained'}
+              onMouseEnter={() => setVariants(prev => {
+                return { ...prev, variant: 'contained' }
               })}
-              onMouseLeave={()=> setVariants(prev=>{
-                return {...prev,variant:'outlined'}
+              onMouseLeave={() => setVariants(prev => {
+                return { ...prev, variant: 'outlined' }
               })}
               component={motion.button}
               whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
@@ -391,11 +391,11 @@ const BookForm = ({ open, onClose, method, bookData, openSnackbar }) => {
             </Button>
             <Button
               variant={variants.variant1}
-              onMouseEnter={()=> setVariants(prev=>{
-                return {...prev,variant1:'contained'}
+              onMouseEnter={() => setVariants(prev => {
+                return { ...prev, variant1: 'contained' }
               })}
-              onMouseLeave={()=> setVariants(prev=>{
-                return {...prev,variant1:'outlined'}
+              onMouseLeave={() => setVariants(prev => {
+                return { ...prev, variant1: 'outlined' }
               })}
               component={motion.button}
               whileTap={{ scale: 0.7, transition: { duration: 0.2 } }}
